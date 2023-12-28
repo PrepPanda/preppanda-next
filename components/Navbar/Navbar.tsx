@@ -31,15 +31,29 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center h-28">
-        <div className="sm:flex hidden ">
+      <div className="flex items-center justify-center h-28 w-screen px-24">
+        <div className="mr-auto">
+          <img src="/images/logo.svg" width={75} height={75}></img>
+        </div>
+        <div>
+          <Link href="/" className="mx-3">
+            Questions
+          </Link>
+          <Link href="/" className="mx-3">
+            Test
+          </Link>
+          <Link href="/" className="mx-3">
+            Progress
+          </Link>
+        </div>
+        <div className="sm:flex hidden">
           {session?.user ? (
             <div className="flex gap-3 md:gap-5">
               <img
                 src={session?.user?.image || "no profile"}
                 width={45}
                 height={45}
-                className="rounded-full  shadow-lg shadow-black  bg-black/50"
+                className="rounded-full  shadow-sm shadow-black  bg-black/50"
                 alt="profile"
               />
               <button
