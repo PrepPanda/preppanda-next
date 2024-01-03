@@ -2,3 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
+.spacer1 {
+  aspect-ratio: 960/300;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  z-index: -2;
+}
+
+.spacer2 {
+  aspect-ratio: 960/300;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  z-index: -2;
+  bottom: 0;
+}
+
+.spacer3 {
+  aspect-ratio: 960/300;
+  width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  z-index: -2;
+  bottom: 0;
+}
+
+.layer1 {
+  background-image: url("/images/layer1.svg");
+}
+
+.layer2 {
+  background-image: url("/images/layer2.svg");
+}
+
+.blob1 {
+  background-image: url("/images/circle.svg");
+}

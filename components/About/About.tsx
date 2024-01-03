@@ -1,57 +1,40 @@
 "use client";
 
 import Link from "next/link";
+import ThemeLink from "../shared/ThemeLink";
 
 const About = () => {
   return (
     <>
-      <div className="flex items-center justify-center h-40 w-screen px-80 bg-rose-500 text-white">
-        <div className="flex-col basis-1/2 border-r-indigo-50 border-r">
-          <p className="text-2xl font-semibold my-3">Team</p>
-          <div className="flex gap-4">
-            <p>
-              <Link
-                className="hover:underline"
-                target="_blank"
-                href="https://github.com/patelhitarth08"
-              >
-                Hitarth↗
-              </Link>
-            </p>
-            <p>
-              <Link
-                target="_blank"
-                className="hover:underline"
-                href="https://github.com/Kashyap3003"
-              >
-                Kashyap↗
-              </Link>
-            </p>
-            <p>
-              <Link
-                target="_blank"
-                className="hover:underline"
-                href="https://github.com/rajatnai49"
-              >
-                Rajat↗
-              </Link>
-            </p>
+      <div className="flex flex-col sm:flex-row items-center justify-center w-screen px-10 sm:px-80 text-black relative pb-20 sm:pb-32">
+        <div className="flex-col  basis-1/2 w-full">
+          <p className="text-2xl font-semibold my-5">TEAM</p>
+          <div className="flex gap-4 flex-row">
+            <ThemeLink
+              text={"Hitarth"}
+              linkUrl={"https://github.com/patelhitarth08s"}
+            />
+            <ThemeLink
+              text={"Kashyap"}
+              linkUrl={"https://github.com/Kashyap3003"}
+            />
+            <ThemeLink
+              text={"Rajat"}
+              linkUrl={"https://github.com/rajatnai49"}
+            />
           </div>
         </div>
-        <div className="flex-col basis-1/2 ml-10">
-          <p className="text-2xl font-semibold my-3">Want to Contribute?</p>
+
+        <div className="flex-col basis-1/2 w-full">
+          <p className="text-2xl font-semibold my-5">Want to Contribute?</p>
           <div className="flex gap-4">
-            <p>
-              <Link
-                target="_blank"
-                className="hover:underline"
-                href="https://github.com/orgs/PrepPlus/"
-              >
-                PrepPlus↗
-              </Link>
-            </p>
+            <ThemeLink
+              text={"PrepPanda"}
+              linkUrl={"https://github.com/orgs/PrepPanda/"}
+            />
           </div>
         </div>
+        <div className="spacer2 layer2"></div>
       </div>
     </>
   );

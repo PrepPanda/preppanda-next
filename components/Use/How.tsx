@@ -1,30 +1,27 @@
 "use client";
 
-const How = ({ how, extra }: any) => {
+import ThemeButton from "../shared/ThemeButton";
+
+const How = ({ how, extra, color }: any) => {
   return (
     <>
       <div className="basis-1/3 flex items-center justify-center">
         <img src={how.imageUrl} width={600} height={75}></img>
       </div>
       <div
-        className={`basis-2/3 flex flex-col pr-36 gap-5 justify-center ${extra}`}
+        className={`basis-2/3 flex flex-col sm:pr-36 gap-5 justify-center items-center `}
       >
         <div>
-          <p className="text-3xl font-bold">{how.user}</p>
+          <p className="text-3xl font-bold text-center my-2">{how.user}</p>
         </div>
-        <div>
-          <p className={`${extra == "items-end" ? "text-right" : "text-left"}`}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
-            expedita esse atque eaque aliquid vitae iste, eveniet sequi
-            reiciendis temporibus. Corrupti facere voluptas laborum perspiciatis
-            a optio iste voluptatem provident.
-          </p>
+        <div className="my-2 flex flex-col gap-2 sm:text-lg font-medium">
+          {how.text.map((t: string, index: number) => (
+            <p key={index} className="text-center">
+              {t}
+            </p>
+          ))}
         </div>
-        <div>
-          <button className="bg-sky-500 px-5 py-2 text-white font-semibold rounded-full">
-            Begin your journey →
-          </button>
-        </div>
+        <ThemeButton text={"Know More"} />
       </div>
     </>
   );
