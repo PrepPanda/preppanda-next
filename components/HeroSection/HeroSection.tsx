@@ -1,11 +1,10 @@
 "use client";
 import { FaCheckCircle } from "react-icons/fa";
-import ThemeButton from "../shared/ThemeButton";
+import ThemeButton from "@/components/shared/ThemeButton";
 
 const HeroSection = () => {
   return (
     <>
-      <div className="spacer1 layer1 m-0 t-0"></div>
       <div className="flex flex-col xl:flex-row items-center justify-center w-screen px-24 mt-10">
         <div className="basis-1/2 flex items-center justify-center">
           <img src="/images/hero.svg" width={600} height={100} />

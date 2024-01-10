@@ -11,12 +11,10 @@ export default function App({ Component, pageProps }: AppProps) {
     <>
       <Provider>
       <main className="overflow-x-hidden">
-         <Navbar />
-        <HeroSection />
-        <Use />
-        <About />
+        <Navbar />
         <Component {...pageProps} />
-        </main>
+        <About />
+      </main>
       </Provider>
     </>
   );

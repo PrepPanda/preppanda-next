@@ -31,7 +31,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="relative bg-rose-700 border-0 my-0">
+      <nav className="relative bg-rose-700 border-0 my-0 ">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <a
             href=""
@@ -128,7 +128,7 @@ const Navbar = () => {
                 </a>
               </li>
               <li>
-                <a href="#" className="block py-2 px-3 rounded md:p-0">
+                <a href="custom_test/" className="block py-2 px-3 rounded md:p-0">
                   Tests
                 </a>
               </li>
@@ -143,6 +143,7 @@ const Navbar = () => {
             </ul>
           </div>
         </div>
+      <div className="spacer1 layer1 m-0 t-0"></div>
       </nav>
     </>
   );
