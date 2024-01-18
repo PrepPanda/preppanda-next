@@ -18,9 +18,10 @@ const CustomTest = () => {
                 const formData = new FormData();
                 formData.append('file', selectedFile);
                 const response = await axios.post('http://127.0.0.1:5001/upload', formData);
+
                 console.log('Upload successful:', response.data);
                 localStorage.setItem('uploadedData', JSON.stringify(response.data));
-                router.push('/custom_test/verify');
+                router.push('/test/custom/upload/verify');
             } catch (error) {
                 console.error('Error uploading file:', error);
             }
@@ -33,7 +34,7 @@ const CustomTest = () => {
             <FileUpload onChange={handleFileChange} />
             <p className="text-center mt-20">Selected File: {selectedFileName}</p>
             <button
-                className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full"
+                className="mt-4 z-20 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full cursor-pointer"
                 onClick={handleUploadClick}
             >
                 Upload File
