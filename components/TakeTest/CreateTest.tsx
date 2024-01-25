@@ -1,7 +1,6 @@
 import React, { useState, ChangeEvent } from "react";
 import axios from "axios";
 
-// Define a type for the form data
 interface FormData {
   standard: "11th" | "12th";
   subjects: string[];
@@ -9,26 +8,22 @@ interface FormData {
 }
 
 const CreateTest: React.FC = () => {
-  // Generate an array of options for totalQuestions
   const totalQuestionsOptions = Array.from(
     { length: 16 },
     (_, index) => (index + 3) * 10
   );
 
-  // State to manage form data
   const [formData, setFormData] = useState<FormData>({
     standard: "11th",
     subjects: [],
     totalQuestions: "30",
   });
 
-  // Handler function to update form data
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
 
-    // If the input is the subjects checkboxes, handle multiple selections
     if (name === "subjects") {
       const selectedSubject = value;
 
@@ -36,7 +31,6 @@ const CreateTest: React.FC = () => {
         const isSelected = prevFormData.subjects.includes(selectedSubject);
 
         if (isSelected) {
-          // If the subject is already selected, remove it
           return {
             ...prevFormData,
             subjects: prevFormData.subjects.filter(
@@ -44,7 +38,6 @@ const CreateTest: React.FC = () => {
             ),
           };
         } else {
-          // If the subject is not selected, add it
           return {
             ...prevFormData,
             subjects: [...prevFormData.subjects, selectedSubject],
@@ -79,7 +72,6 @@ const CreateTest: React.FC = () => {
         .catch(function (error) {
           console.log(error);
         });
-      // console.log("Test created successfully:", response.data);
 
       setFormData({
         standard: "11th",
