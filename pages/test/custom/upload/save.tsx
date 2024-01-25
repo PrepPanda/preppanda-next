@@ -47,8 +47,10 @@ const Save = () => {
                 questions: questions,
                 user: session?.data?.user
             }
-            if(session != null)
-                axios.post('/api/test/upload', data)
+            if(session != null){
+                const res = await axios.post('/api/test/upload', data);
+                console.log(res)
+            }
         }
         catch (e) {
             console.log(e)

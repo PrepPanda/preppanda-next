@@ -1,4 +1,5 @@
 import { Schema, model, models } from 'mongoose';
+import Question from '@/models/question';
 
 const TestSchema = new Schema({
     name: {
@@ -39,3 +40,4 @@ const TestSchema = new Schema({
 const Test = models.Test || model('Test', TestSchema);
 
 export default Test;
+
