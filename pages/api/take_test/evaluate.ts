@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { connectDB } from "../../../utils/dbconnect";
 import Question from "@/models/question";
-
+import axios from "axios";
 interface questionStat {
   question: String;
   time: number;
@@ -35,6 +35,19 @@ export default async function handler(
         };
         stats.push(qStat);
       }
+    }
+
+    try {
+      axios
+        .post("api/stats/")
+        .then(function (response: any) {
+          
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } catch (error: any) {
+      console.error("Error fetching test details:", error.message);
     }
   }
 }
