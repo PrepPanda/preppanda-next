@@ -1,18 +1,21 @@
+// Description: Stores the questions Stats { question, avgTime, avgScore, attempts, correctAttempts }
+
 import { Schema, model, models } from 'mongoose';
 
-const QuestionStatSchema = new Schema({
-    questionId: {
+const QuestionStatsSchema = new Schema({
+    question: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: 'Question'
     },
-    testId: {
-        type: Schema.Types.ObjectId,
-        ref: 'Test'
-    },
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'User'
+    },
+    testOrUser: {
+        type: Boolean,
+        required: true,
+        default: false
     },
     avgTime: {
         type: Number,
@@ -34,8 +37,14 @@ const QuestionStatSchema = new Schema({
         required: true,
         default: 0
     },
+    asked: {
+        type: Number,
+        default: 0
+    },
 });
 
-const QuestionStat = models.QuestionStat || model('QuestionTest', QuestionStatSchema)
+const QuestionStats = models.QuestionStats || model('QuestionStats', QuestionStatsSchema)
 
-export default QuestionStat;
+export default QuestionStats;
+
+

@@ -1,3 +1,7 @@
+// params: testId
+// Method: GET
+// Desc: Get all users of a test with whom test was shared
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { connectDB } from '@/utils/dbconnect';
 import Test from '@/models/test';
@@ -8,9 +12,10 @@ export default async function handler(
 ) {
     if (req.method == 'GET') {
         try {
+            console.log("Inside get users");
             await connectDB();
             const data = req.query;
-            const test = await Test.findById(data.testId).populate('questions');
+            const test = await Test.findById(data.testId);
             const sharedUsers = test.sharedWith.map((user:any) => {
                 return {
                     id: user._id,
@@ -25,3 +30,5 @@ export default async function handler(
         }
     }
 }
+
+

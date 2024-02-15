@@ -1,3 +1,6 @@
+// Purpose: To handle the authentication of the user
+// How: Using next-auth and google provider to authenticate
+
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { connectDB } from "@/utils/dbconnect";

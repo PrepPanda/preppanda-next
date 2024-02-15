@@ -1,6 +1,9 @@
+// Description: Stores the test Stats { testId, avgTime, avgScore, attempts, questions }
+
+
 import { Schema, model, models } from 'mongoose';
 
-const TestStatSchema = new Schema({
+const TestStatsSchema = new Schema({
     testId: {
         type: Schema.Types.ObjectId,
         required: true,
@@ -27,6 +30,8 @@ const TestStatSchema = new Schema({
     }]
 });
 
-const TestStat = models.TestStat || model('TestStat', TestStatSchema)
+const TestStats = models.TestStats || model('TestStats', TestStatsSchema)
 
-export default TestStat;
+export default TestStats;
+
+

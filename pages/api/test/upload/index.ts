@@ -1,3 +1,8 @@
+// params: questions
+// Method: POST
+// Desc: Create questions and test
+// Purpose: Handle requests to /api/tests/upload
+
 import type { NextApiRequest, NextApiResponse } from "next";
 import { connectDB } from "@/utils/dbconnect";
 import Question from "@/models/question";
@@ -55,3 +60,5 @@ export default async function handler(
         console.log("Helloa");
     }
 }
+
+

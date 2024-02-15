@@ -1,3 +1,6 @@
+// Description: Store question { question, options, correctAnswer }
+
+
 import { Schema, model, models } from 'mongoose';
 
 const QuestionSchema = new Schema({
@@ -20,4 +23,5 @@ const QuestionSchema = new Schema({
 const Question = models.Question || model('Question', QuestionSchema);
 
 export default Question;
+
 
