@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 interface FormData {
   standard: "11th" | "12th";
@@ -12,10 +13,11 @@ const CreateTest: React.FC = () => {
     { length: 16 },
     (_, index) => (index + 3) * 10
   );
+  const router = useRouter();
 
   const [formData, setFormData] = useState<FormData>({
     standard: "11th",
-    subjects: [],
+    subjects: ["physics", "chemistry", "maths", "biology"],
     totalQuestions: "30",
   });
 
@@ -72,12 +74,12 @@ const CreateTest: React.FC = () => {
         .catch(function (error) {
           console.log(error);
         });
-
       setFormData({
         standard: "11th",
         subjects: [],
         totalQuestions: "30",
       });
+      router.push("/take_test");
     } catch (error: any) {
       console.error("Error creating test:", error.message);
     }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { RxCrossCircled } from "react-icons/rx";
 
 const Question = ({
+  currentQuestionIndex,
   questiondata,
   uniqueValue,
   deleteQuestion,
@@ -14,8 +15,9 @@ const Question = ({
   const [editedOptions, setEditedOptions] = useState([...questiondata.options]);
 
   const onAnswerChange: Function = (newAnswer: String) => {
+    // console.log(currentQuestionIndex, newAnswer);
     setEditedAnswer(newAnswer);
-    handleAnswerChange(newAnswer);
+    handleAnswerChange(currentQuestionIndex, newAnswer);
   };
 
   return (

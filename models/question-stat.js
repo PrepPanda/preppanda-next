@@ -1,41 +1,49 @@
-import { Schema, model, models } from 'mongoose';
+// Description: Stores the questions Stats { question, avgTime, avgScore, attempts, correctAttempts }
 
-const QuestionStatSchema = new Schema({
-    questionId: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: 'Question'
-    },
-    testId: {
-        type: Schema.Types.ObjectId,
-        ref: 'Test'
-    },
-    userId: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    avgTime: {
-        type: Number,
-        required: true,
-        default: 0
-    },
-    avgScore: {
-        type: Number,
-        required: true,
-        default: 0
-    },
-    attempts: {
-        type: Number,
-        required: true,
-        default: 0
-    },
-    correctAttempts: {
-        type: Number,
-        required: true,
-        default: 0
-    },
+import { Schema, model, models } from "mongoose";
+
+const QuestionStatsSchema = new Schema({
+  question: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: "Question",
+  },
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
+  testOrUser: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  avgTime: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  avgScore: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  attempts: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  correctAttempts: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  asked: {
+    type: Number,
+    default: 0,
+  },
 });
 
-const QuestionStat = models.QuestionStat || model('QuestionTest', QuestionStatSchema)
+const QuestionStats =
+  models.QuestionStats || model("QuestionStats", QuestionStatsSchema);
 
-export default QuestionStat;
+export default QuestionStats;

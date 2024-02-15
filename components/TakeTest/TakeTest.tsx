@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Question from "../shared/Question/verify/Question";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 interface Question {
   id: string;
@@ -17,19 +18,21 @@ const TakeTest = () => {
   const [showCorrectAnswers, setShowCorrectAnswers] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [intervals, setIntervals] = useState<number[]>([]); // New state for intervals
-
+  const [startTimer, setStartTimer] = useState(false);
   const questionTimersRef = useRef<number[]>([]);
 
   useEffect(() => {
     try {
       axios
         .post("api/take_test/fetchQuestions")
-        .then(function (response) {
+        .then(function (response: any) {
           setMsg(response.data.message);
           setQuestions(response.data.questions);
           questionTimersRef.current = Array(
             response.data.questions.length
           ).fill(0);
+          setUserAnswers(new Array(response.data.questions.length, null));
+          setStartTimer(true);
         })
         .catch(function (error) {
           console.log(error);
@@ -52,7 +55,6 @@ const TakeTest = () => {
   useEffect(() => {
     const questionInterval = setInterval(() => {
       questionTimersRef.current[currentQuestionIndex] += 1;
-      console.log(questionTimersRef.current);
     }, 1000);
 
     setIntervals(
@@ -69,9 +71,11 @@ const TakeTest = () => {
   }, [timer]);
 
   const handleAnswerSubmit = (index: number, selectedOption: string) => {
+    console.log(index, selectedOption);
     const updatedUserAnswers = [...userAnswers];
     updatedUserAnswers[index] = selectedOption;
     setUserAnswers(updatedUserAnswers);
+    // console.log(updatedUserAnswers);
   };
 
   const handleNextQuestion = () => {
@@ -83,6 +87,20 @@ const TakeTest = () => {
     setIsTestOver(true);
 
     intervals.forEach((interval) => clearInterval(interval));
+
+    try {
+      const data = { questions, userAnswers, questionTimersRef };
+      axios
+        .post("api/take_test/evaluate", data)
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } catch (error: any) {
+      console.error("Error fetching test details:", error.message);
+    }
   };
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-gray-100 rounded-md shadow-md">
@@ -90,20 +108,41 @@ const TakeTest = () => {
         <p className="text-2xl font-bold text-center">Test is over!</p>
       ) : (
         <div>
-          {Math.floor(questionTimersRef.current[currentQuestionIndex] / 60)}:
-          {questionTimersRef.current[currentQuestionIndex] % 60}{" "}
-          <p className="text-xl font-bold text-center mb-4">
-            Time remaining: {Math.floor(timer / 60)}:{timer % 60}
-          </p>
+          <div className="flex justify-between items-center mx-5">
+            <div>
+              {Math.floor(questionTimersRef.current[currentQuestionIndex] / 60)}
+              :{questionTimersRef.current[currentQuestionIndex] % 60}
+            </div>
+            <CountdownCircleTimer
+              isPlaying={startTimer}
+              duration={100}
+              size={60}
+              strokeWidth={6}
+              colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+              colorsTime={[7, 5, 2, 0]}
+              onComplete={() => {
+                setIsTestOver(true);
+                return {};
+              }}
+            >
+              {({ remainingTime }) => {
+                const minutes = Math.floor(remainingTime / 60);
+                const seconds = remainingTime % 60;
+
+                return `${minutes}:${seconds}`;
+              }}
+            </CountdownCircleTimer>
+          </div>
           <form>
             {currentQuestionIndex < questions.length ? (
               <Question
                 key={currentQuestionIndex}
+                currentQuestionIndex={currentQuestionIndex}
                 questiondata={questions[currentQuestionIndex]}
                 uniqueValue={Math.random()}
                 disabled={false}
                 inTest={true}
-                onAnswerSubmit={handleAnswerSubmit}
+                handleAnswerChange={handleAnswerSubmit}
               />
             ) : (
               <p>No more questions</p>
