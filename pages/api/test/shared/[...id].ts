@@ -5,7 +5,7 @@ import UserTestStats from '@/models/user-test-stats';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
     const method = req.method;
-    const { id: [userId, testId] } = req.query;
+    const { id: [userId, testId] } : any= req.query;
 
     try {
         await connectDB();
