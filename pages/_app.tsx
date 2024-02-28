@@ -10,7 +10,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Provider>
-      <main className="overflow-x-hidden">
+      <main className="overflow-x-hidden text-text font-body">
         <Navbar />
         <Component {...pageProps} />
         <About />

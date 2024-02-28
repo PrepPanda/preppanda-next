@@ -5,8 +5,7 @@ const ThemeLink = ({ linkUrl, text }: any) => {
   return (
     <>
       <Link
-        target="_blank"
-        className="hover:underline flex items-center gap-1 "
+        className="hover:underline font-other flex items-center gap-1 font-black mobile:text-lg z-[100]"
         href={linkUrl}
       >
         {text}

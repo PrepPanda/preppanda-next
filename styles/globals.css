@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: 'body';
+    src: url('/fonts/Forum-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'logo';
+    src: url('/fonts/Exo2-VariableFont_wght.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'other';
+    src: url('/fonts/JosefinSlab-VariableFont_wght.ttf') format('truetype');
+}
+
 .spacer1 {
   aspect-ratio: 960/300;
   width: 100%;
@@ -9,7 +24,7 @@
   background-repeat: no-repeat;
   background-position: center;
   position: absolute;
-  z-index: -2;
+  z-index: 1;
 }
 
 .spacer2 {
@@ -19,7 +34,7 @@
   background-repeat: no-repeat;
   background-position: center;
   position: absolute;
-  z-index: -2;
+  z-index: 1;
   bottom: 0;
 }
 
@@ -30,7 +45,7 @@
   background-repeat: no-repeat;
   background-position: center;
   position: absolute;
-  z-index: -2;
+  z-index: -100;
   bottom: 0;
 }
 

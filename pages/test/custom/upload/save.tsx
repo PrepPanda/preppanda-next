@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Question from '@/components/shared/Question/verify/Question';
 import { MdOutlineArrowCircleRight, MdOutlineArrowCircleLeft } from "react-icons/md";
 import ThemeButton from '@/components/shared/ThemeButton';
-import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 
 import axios from 'axios';
@@ -58,10 +57,10 @@ const Save = () => {
     }
 
     return (
-        <div className="my-44 px-24 w-screen flex flex-col items-center">
+        <div className="my-44 px-24 w-screen flex flex-col items-center ">
             <h1 className="my-10">OKay time to save</h1>
             <Carousel questions={questions} />
-            <div className="grid grid-cols-2 gap-5 my-5 ">
+            <div className="grid grid-cols-2 gap-5 my-5 z-[100]">
                 <Input type="text" name="testName" label="Test Name" onchange={(value: any) => handleOnChange('testName', value)} />
                 <Input type="number" name="totalMins" label="Total Mins" onchange={(value: any) => handleOnChange('totalMins', value)} />
                 <Input type="date" name="expireDate" label="Expire Date" onchange={(value: any) => handleOnChange('expireDate', value)} className="col-span-2" />
