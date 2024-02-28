@@ -3,13 +3,13 @@ import React, { useEffect } from "react";
 import { Chart } from "chart.js/auto";
 import testSet from "../../public/questions_stats.json";
 
-const Profile = () => {
+const TestDisplay = () => {
   useEffect(() => {
-    const subjects = Object.keys(testSet[0].subjects); // Assuming subjects are the same for all tests
+    const subjects = Object.keys((testSet as any)[0].subjects); // Assuming subjects are the same for all tests
     const subjectColorMap = generateSubjectColorMap(subjects);
 
-    function generateSubjectColorMap(subjects) {
-      const colorMap = {};
+    function generateSubjectColorMap(subjects: any[]) {
+      const colorMap: Record<string, string> = {};
       const fixedColors = [
         "rgb(255, 99, 132, 0.5)",
         "rgb(54, 162, 235, 0.5)",
@@ -29,10 +29,11 @@ const Profile = () => {
     allChartsContainer.classList.add(
       "all-chart-container",
       "flex",
-      "flex-wrap"
+      "flex-wrap",
+      "justify-center" // Optional: Center the charts horizontally
     );
 
-    testSet.forEach((test) => {
+    (testSet as any).forEach((test: any) => {
       const labels = Object.keys(test.subjects);
       const data = labels.map((subject) => test.subjects[subject].time_spent);
       const colors = labels.map((subject) => subjectColorMap[subject]);
@@ -43,7 +44,9 @@ const Profile = () => {
         "chart-container",
         "w-[500px]",
         "mx-auto",
-        "my-auto"
+        "my-auto",
+        "flex", // Add flex properties
+        "flex-shrink-0"
       );
 
       const canvasElement = document.createElement("canvas");
@@ -51,7 +54,7 @@ const Profile = () => {
 
       const ctx = canvasElement.getContext("2d");
 
-      const myChart = new Chart(ctx, {
+      const myChart = new Chart(ctx as any, {
         type: "pie",
         data: {
           labels: labels,
@@ -66,6 +69,9 @@ const Profile = () => {
           ],
         },
       });
+      const mainChartContainer = document.getElementById("mainChartContainer");
+      // console.log(mainChartContainer);
+      (mainChartContainer as HTMLElement).appendChild(allChartsContainer);
 
       return () => {
         myChart.destroy();
@@ -79,10 +85,12 @@ const Profile = () => {
   }, []); // Ensure that this effect runs only once
 
   return (
-    <h1 className="w-[110px] mx-auto mt-10 text-xl font-semibold capitalize">
-      Time Taken vs Question ID
-    </h1>
+    <div id="mainChartContainer">
+      <h1 className="w-[110px] mx-auto mt-10 text-xl font-semibold capitalize">
+        Time Taken vs Question ID
+      </h1>
+    </div>
   );
 };
 
-export default Profile;
+export default TestDisplay;

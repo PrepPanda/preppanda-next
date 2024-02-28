@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { Chart } from "chart.js/auto";
 import testSet from "../../public/questions_stats.json";
 
-const Profile = () => {
+const AllTestDisplay = () => {
   useEffect(() => {
     const subjects = Object.keys(testSet[0].subjects); // Assuming subjects are the same for all tests
 
@@ -102,4 +102,4 @@ const Profile = () => {
   return <></>;
 };
 
-export default Profile;
+export default AllTestDisplay;
