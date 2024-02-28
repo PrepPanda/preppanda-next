@@ -10,6 +10,10 @@ const GroupSchema = new Schema({
         ref: 'User',
         required: true,
     },
+    code:{
+        type: String,
+        required: true,
+    },
     members: [{
         type: Schema.Types.ObjectId,
         ref: 'User',
