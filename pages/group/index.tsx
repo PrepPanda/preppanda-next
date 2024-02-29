@@ -13,18 +13,18 @@ const GroupSection = () => {
     const [inMemberGroups, setInMemberGroups] = useState<{ _id: string, name: string, code: string }[]>([]);
     const [newGroupName, setNewGroupName] = useState("");
 
-    const fetchGroups = async () => {
-        try {
-            const userId = session?.user.id;
-            const response = await axios.get(`/api/group/user/${userId}`);
-            setOwnedGroups(response.data.ownedGroups);
-            setInMemberGroups(response.data.inMemberGroups);
-        } catch (error) {
-            console.error("Error fetching groups:", error);
-        }
-    };
 
     useEffect(() => {
+        const fetchGroups = async () => {
+            try {
+                const userId = session?.user.id;
+                const response = await axios.get(`/api/group/user/${userId}`);
+                setOwnedGroups(response.data.ownedGroups);
+                setInMemberGroups(response.data.inMemberGroups);
+            } catch (error) {
+                console.error("Error fetching groups:", error);
+            }
+        };
         if (session) {
             fetchGroups();
         }

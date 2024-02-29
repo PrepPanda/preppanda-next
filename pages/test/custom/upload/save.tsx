@@ -48,7 +48,12 @@ const Save = () => {
             }
             if(session != null){
                 const res = await axios.post('/api/test/upload', data);
-                console.log(res)
+                // console.log(res)
+                if (res.status === 200) {
+                    console.log("Saved")
+                }
+                // delete the object from local localStorage
+                localStorage.removeItem('uploadedData');
             }
         }
         catch (e) {
@@ -99,7 +104,7 @@ const Carousel = ({ questions }: any) => {
     };
 
     return (
-        <div className="flex items-center justify-center w-[100%]">
+        <div className="flex items-center justify-center w-[100%] z-[100]">
             <button onClick={handlePrev}><MdOutlineArrowCircleLeft className="text-4xl text-gray-400" />  </button>
             {questions.length > 0 && (
                 <Question key={currentIndex} questiondata={questions[currentIndex]} uniqueValue={Math.random()} disabled={true} />
