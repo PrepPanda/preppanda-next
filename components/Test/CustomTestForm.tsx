@@ -30,6 +30,19 @@ const CustomQuestionForm = () => {
         setOptions(options.filter((_, i) => i !== index));
     }
 
+    const submit = () => {
+        console.log(question);
+        console.log(options);
+        // store the question and options in the local storage
+        const questions = JSON.parse(localStorage.getItem("questions") || "[]");
+        questions.push({ ...question, options });
+        localStorage.setItem("questions", JSON.stringify(questions));
+        // reset the form
+        setQuestion({ question: "", image: "", answer: "" });
+        setOptions([]);
+
+    }
+
     return (
         <>
             <div className="flex flex-col xl:flex-row items-center justify-center w-screen px-24 mt-10">
@@ -64,10 +77,8 @@ const CustomQuestionForm = () => {
                         ))}
                     </ul>
 
-                    <button>Submit</button>
-
+                    <button onClick={submit}>Submit</button>
                 </div>
-
             </div>
         </>
     )
