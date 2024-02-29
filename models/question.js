@@ -15,7 +15,6 @@ const QuestionSchema = new Schema({
     options: [
         {
             type: String,
-            required: true,
         },
     ],
     correctAnswer: {

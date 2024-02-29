@@ -1,6 +1,7 @@
 // Description: Test model { name, minutes, owner, questions, createdAt, expiresAt, sharedWith }
 
 import { Schema, model, models } from "mongoose";
+import { Group } from "./group";
 
 const TestSchema = new Schema({
   name: {
@@ -33,7 +34,7 @@ const TestSchema = new Schema({
   sharedWith: [
     {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Group",
     },
   ],
 });

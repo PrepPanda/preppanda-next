@@ -24,6 +24,7 @@ const GroupSchema = new Schema({
     },
 });
 
-export const Group = models.Group || model('Group', GroupSchema);
+const Group = models.Group || model('Group', GroupSchema);
 
+export default Group;
 
