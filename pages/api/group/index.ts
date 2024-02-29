@@ -2,7 +2,7 @@
 // Description: Handles creating new groups
 
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Group } from '@/models/group';
+import Group from '@/models/group';
 import { connectDB } from '@/utils/dbconnect';
 import CryptoJS from 'crypto-js';
 
