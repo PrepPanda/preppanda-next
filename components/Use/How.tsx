@@ -22,8 +22,10 @@ const How = ({ how }: any) => {
                     ))}
                 </div>
             </div>
-            <br className="mt-5"/>
-            <ThemeButton text={"Know More"} />
+            <br className="mt-3"/>
+            <ThemeButton>
+                <p>Know More</p>
+            </ThemeButton>
         </>
     );
 };

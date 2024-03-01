@@ -36,10 +36,9 @@ const JoinGroup = () => {
     }
 
     return (
-        <div className="flex z-10">
+        <div className="flex gap-5 z-10">
             <h1>Join Group</h1>
-            
-                <input value={code} name="code" id="code" onChange={changeCode} />
+                <input className="bg-muted" value={code} name="code" id="code" onChange={changeCode} />
                 <button onClick={handleSubmit}>Join</button>
             
         </div>

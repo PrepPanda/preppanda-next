@@ -1,7 +1,10 @@
 "use client";
 
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
+import ThemeLink from "../shared/ThemeLink";
+import Home from "@/pages";
 
 interface Provider {
     id: string;
@@ -30,14 +33,14 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className="relative bg-rose border-0 my-0 ">
+            <nav className="relative bg-surface text-text border-0 my-0 ">
                 <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                     <a
                         href=""
                         className="flex items-center space-x-3 rtl:space-x-reverse"
                     >
                         <img src="/images/logo.svg" className="h-12 tablet:h-16" alt="logo" />
-                        <span className="self-center font-logo font-bold text-xl mobile:text-3xl whitespace-nowrap text-base">
+                        <span className="self-center font-logo font-bold text-xl mobile:text-3xl whitespace-nowrap">
                             PrepPanda
                         </span>
                     </a>
@@ -59,7 +62,7 @@ const Navbar = () => {
                                     />
                                     <button
                                         onClick={handleSignOut}
-                                        className="black_btn text-base font-bold text-xl"
+                                        className="black_btn font-bold text-xl"
                                     >
                                         Sign Out
                                     </button>
@@ -73,7 +76,7 @@ const Navbar = () => {
                                                 onClick={() => {
                                                     signIn(provider.id);
                                                 }}
-                                                className="black_btn text-base font-bold text-xl"
+                                                className="black_btn font-bold text-xl"
                                             >
                                                 Sign in
                                             </button>
@@ -86,43 +89,37 @@ const Navbar = () => {
                         className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1 "
                         id="navbar-user"
                     >
-                        <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 text-base">
+                        <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
                             <li>
-                                <a
-                                    href="#"
-                                    className="block py-2 px-3 rounded md:p-0 text-xl"
-                                    aria-current="page"
-                                >
-                                    Home
-                                </a>
+                                <ThemeLink linkUrl="#" target="_self">
+                                    <p>Home</p>
+                                </ThemeLink>
                             </li>
                             <li>
-                                <a href="#" className="block py-2 px-3 rounded md:p-0 text-xl">
-                                    About
-                                </a>
+                                <ThemeLink linkUrl="#" target="_self">
+                                    <p>Services</p>
+                                </ThemeLink>
                             </li>
                             <li>
-                                <a href="#" className="block py-2 px-3 rounded md:p-0 text-xl">
-                                    Services
-                                </a>
+                                <ThemeLink linkUrl="/test/custom" target="_self">
+                                    <p>Test</p>
+                                </ThemeLink>
                             </li>
                             <li>
-                                <a href="/test/custom" className="block py-2 px-3 rounded md:p-0 text-xl">
-                                    Tests
-                                </a>
+                                <ThemeLink linkUrl="/group" target="_self">
+                                    <p>Group</p>
+                                </ThemeLink>
                             </li>
+
                             <li>
-                                <a
-                                    href="#"
-                                    className="block py-2 px-3 rounded md:p-0 text-xl"
-                                >
-                                    Contact
-                                </a>
+                                <ThemeLink linkUrl="/profile" target="_self">
+                                    <p>Profile</p>
+                                </ThemeLink>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div className="spacer1 layer1 m-0 t-0"></div>
+                {/* <div className="spacer1 layer1 m-0 t-0"></div> */}
             </nav>
         </>
     );

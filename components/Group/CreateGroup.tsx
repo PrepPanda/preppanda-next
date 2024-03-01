@@ -36,9 +36,9 @@ const CreateGroup = ({ onGroupCreated }: { onGroupCreated: (newGroup: any) => vo
     }
     
     return (
-        <div className="flex z-10">
+        <div className="flex gap-5 z-10">
             <h1>Create Group</h1>
-            <input value={newGroupName} name="newGroupName" id="newGroupName" onChange={updateGroupName} />
+            <input className="bg-muted" value={newGroupName} name="newGroupName" id="newGroupName" onChange={updateGroupName} />
             <button onClick={createGroup}>Create</button>
         </div>
     )

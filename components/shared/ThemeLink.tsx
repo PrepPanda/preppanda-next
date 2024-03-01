@@ -1,14 +1,15 @@
 import Link from "next/link";
 import { MdArrowOutward } from "react-icons/md";
 
-const ThemeLink = ({ linkUrl, text }: any) => {
+const ThemeLink = ({ children, linkUrl, target="_blank" }: any) => {
   return (
     <>
       <Link
+        target={target}
         className="hover:underline font-other flex items-center gap-1 font-black mobile:text-lg z-[100]"
         href={linkUrl}
       >
-        {text}
+        {children}
         <MdArrowOutward />
       </Link>
     </>

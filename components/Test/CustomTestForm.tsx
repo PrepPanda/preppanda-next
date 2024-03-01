@@ -3,6 +3,8 @@
 import { CldUploadButton } from "next-cloudinary";
 import { CloudinaryUploadWidgetResults } from "cloudinary";
 import { useState } from "react";
+import ThemeButton from "../shared/ThemeButton";
+import { IoRemoveCircleOutline } from "react-icons/io5";
 
 const CustomQuestionForm = () => {
     const [question, setQuestion] = useState({
@@ -45,10 +47,10 @@ const CustomQuestionForm = () => {
 
     return (
         <>
-            <div className="flex flex-col xl:flex-row items-center justify-center w-screen px-24 mt-10">
-                <div className="relative z-10 w-screen flex flex-col items-center justify-center bg-base">
-                    <h1 className="text-5xl font-bold text-gold">Create Test</h1>
-                    <input type="text" name="question" id="question" value={question.question} onChange={changeQuestion} />
+            <div className="flex flex-col xl:flex-row items-center justify-center w-screen px-24">
+                <div className="relative w-screen flex flex-col gap-5 items-center justify-center bg-base">
+                    <h1 className="text-5xl font-bold text-gold">Create Questions</h1>
+                    <input className="bg-muted" type="text" name="question" id="question" value={question.question} onChange={changeQuestion} />
                     <CldUploadButton
                         uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME}
                         options={{
@@ -63,21 +65,27 @@ const CustomQuestionForm = () => {
                         }}
                     />
 
-                    <input type="text" name="answer" id="answer" value={question.answer} onChange={changeQuestion} />
+                    <input className="bg-muted" type="text" name="answer" id="answer" value={question.answer} onChange={changeQuestion} />
 
-                    <input type="text" value={option} onChange={changeOption} />
-                    <button onClick={addOption}>Add Option</button>
+                    <input className="bg-muted" type="text" value={option} onChange={changeOption} />
+                    <ThemeButton handleClick={addOption} >
+                        <p>Add Option</p>
+                        </ThemeButton>
 
                     <ul>
                         {options.map((option, index) => (
-                            <li key={index}>
+                            <li key={index} className="flex items-center gap-5">
                                 {option}
-                                <button onClick={() => removeOption(index)}>Remove</button>
+                                <ThemeButton handleClick={() => removeOption(index)} >
+                                    <IoRemoveCircleOutline />
+                                </ThemeButton>
                             </li>
                         ))}
                     </ul>
 
-                    <button onClick={submit}>Submit</button>
+                    <ThemeButton handleClick={submit} >
+                        <p>Add Question</p>
+                    </ThemeButton>
                 </div>
             </div>
         </>
