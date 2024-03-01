@@ -13,9 +13,11 @@ const CreateTest = () => {
     }
 
     return (
-        <div className="py-80 bg-base flex flex-col w-screen z-10 items-center justify-center">
+        <div className="mt-20 text-xl bg-base gap-5 flex flex-col w-screen z-10 items-center justify-center">
             <CustomQuestionForm/>
-            <ThemeButton handleClick={verify} text="Save"/>
+            <ThemeButton handleClick={verify} >
+                <p>Verify</p>
+            </ThemeButton>
         </div>
     );
 };

@@ -30,8 +30,6 @@ const GroupSection = () => {
         }
     }, [session]);
 
-    
-
     const updateGroupName = (event: React.ChangeEvent<HTMLInputElement>) => {
         setNewGroupName(event.target.value);
     };
@@ -46,11 +44,11 @@ const GroupSection = () => {
 
     return (
         <>
-            <div className="py-80 flex flex-col justify-center items-center z-[100] bg-base">
+            <div className="mt-40 flex flex-col gap-5 text-2xl justify-center items-center z-[100] bg-base">
+                <h1 className="text-5xl">Group Section</h1>
                 <JoinGroup />
                 <CreateGroup onGroupCreated={handleGroupCreated}/>
-                <h1>Group Section</h1>
-                <div className="z-[100]">
+                <div>
                     <h2>Owned Groups</h2>
                     {
                         ownedGroups.map((group) => (

@@ -3,6 +3,7 @@ import FileUpload from '@/components/shared/FileUpload';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import ThemeButton from '@/components/shared/ThemeButton';
+import { RxUpload } from "react-icons/rx";
 
 const CustomTest = () => {
     const router = useRouter();
@@ -19,7 +20,8 @@ const CustomTest = () => {
                 console.log('Uploading file:', selectedFile);
                 const formData = new FormData();
                 formData.append('file', selectedFile);
-                const response = await axios.post('http://127.0.0.1:5001/upload', formData);
+                const link = process.env.REGEX_API_URL
+                const response = await axios.post(link + '/upload', formData);
 
                 console.log('Upload successful:', response.data);
                 localStorage.setItem('uploadedData', JSON.stringify(response.data));
@@ -37,9 +39,11 @@ const CustomTest = () => {
             <p className="text-center mt-20">Selected File: {selectedFileName}</p>
             <br className='my-5' />
             <ThemeButton
-                text={"Upload File"}
                 handleClick={handleUploadClick}
-            />
+            >
+                <p>Upload</p>
+                <RxUpload/>
+            </ThemeButton>
         </div>
     );
 }

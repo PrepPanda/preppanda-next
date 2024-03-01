@@ -2,8 +2,11 @@ import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import axios from "axios";
 import ThemeButton from "@/components/shared/ThemeButton";
+import { IoRemoveCircleOutline } from "react-icons/io5";
+import { useRouter } from "next/router";
 
 const Save = () => {
+    const router = useRouter();
     const session = useSession().data;
     const [selectedGroup, setSelectedGroup] = useState<any>(null)
     const [groups, setGroups] = useState<any[]>([])
@@ -32,17 +35,16 @@ const Save = () => {
         )
     }
 
-    const fetchGroups = async () => {
-        try {
-            const res = await axios.get("/api/group/user/" + session?.user?.id)
-            setGroups(res.data.ownedGroups);
-            setSelectedGroup(res.data.ownedGroups[0]._id)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     useEffect(() => {
+        const fetchGroups = async () => {
+            try {
+                const res = await axios.get("/api/group/user/" + session?.user?.id)
+                setGroups(res.data.ownedGroups);
+                setSelectedGroup(res.data.ownedGroups[0]._id)
+            } catch (error) {
+                console.log(error)
+            }
+        }
         const data = localStorage.getItem("questions");
         if (data) {
             setFormData({
@@ -64,7 +66,6 @@ const Save = () => {
     }, [formData.sharedWith]);
 
     const handleAddGroup = () => {
-        console.log("Selected Group: ", selectedGroup)
         // Check if the group is already added
         if (formData.sharedWith.includes(selectedGroup)) {
             return;
@@ -91,6 +92,8 @@ const Save = () => {
     const handleSaveTest = async () => {
         try {
             const res = await axios.post("/api/test", formData)
+            localStorage.removeItem("questions");
+            router.push("/test/my")
             console.log(res.data)
             console.log(formData)
         } catch (error) {
@@ -98,24 +101,26 @@ const Save = () => {
         }
     }
 
-
     return (
-        <div className="py-80 bg-base flex flex-col w-screen items-center justify-center">
-            <div className="flex flex-col w-screen items-center justify-center bg-base relative z-10">
+        <div className="mt-40 text-2xl bg-base flex flex-col w-screen items-center justify-center">
+            <div className="flex flex-col gap-5 w-screen items-center justify-center bg-base relative z-10">
                 <h1>Okay Time To Save</h1>
                 <input type="text"
+                className="bg-muted"
                     name="testName"
                     value={formData.testName}
                     placeholder="Test Name"
                     onChange={handleChange}
                 />
                 <input type="number"
+                className="bg-muted"
                     name="totalMins"
                     value={formData.totalMins}
                     placeholder="Total Mins"
                     onChange={handleChange}
                 />
                 <input type="date"
+                className="bg-muted"
                     name="expireDate"
                     value={formData.expireDate}
                     placeholder="Expire Date"
@@ -123,7 +128,7 @@ const Save = () => {
                 />
 
                 {/* make a dropdown menu for group  */}
-                <select name="group" id="group" onChange={(e) => {
+                <select className="bg-muted" name="group" id="group" onChange={(e) => {
                     console.log(e.target.value)
                     setSelectedGroup(e.target.value)
                 }}>
@@ -132,24 +137,32 @@ const Save = () => {
                     ))}
                 </select>
 
-                <ThemeButton handleClick={handleAddGroup} text="Add Group" />
+                <ThemeButton handleClick={handleAddGroup} >
+                        <p>Add Group</p>
+                    </ThemeButton>
 
                 <div>
                     {formData.sharedWith && formData.sharedWith.map((id, index) => {
                         const group = groups.find(group => group._id === id);
                         return (
-                            <div key={index}>
+                            <div key={index} className="flex items-center gap-3">
                                 <p>{group.name}</p>
-                                <button onClick={handleRemoveGroup(id)}>Remove</button>
+                                <ThemeButton handleClick={handleRemoveGroup(id)}>
+                                        <IoRemoveCircleOutline/>
+                                </ThemeButton>
                             </div>
                         )
                     })}
                 </div>
 
-                <ThemeButton handleClick={handleSaveTest} text="Save Test" />
+                <ThemeButton handleClick={handleSaveTest}>
+                    <p>Save Test</p>
+                    </ThemeButton>
             </div>
         </div>
     )
 }
 
 export default Save;
+
+

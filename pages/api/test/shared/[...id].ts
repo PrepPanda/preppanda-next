@@ -1,3 +1,5 @@
+// Purpose: Fetch all tests of a user or stats of a specific test of a user
+
 import { NextApiRequest, NextApiResponse } from 'next';
 import { connectDB } from '@/utils/dbconnect';
 import Test from '@/models/test';
