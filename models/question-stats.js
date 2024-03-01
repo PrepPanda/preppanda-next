@@ -14,7 +14,6 @@ const QuestionStatsSchema = new Schema({
     },
     testOrUser: {
         type: Boolean,
-        required: true,
         default: false
     },
     avgTime: {

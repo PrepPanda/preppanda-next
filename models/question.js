@@ -21,6 +21,15 @@ const QuestionSchema = new Schema({
         type: String,
         required: true,
     },
+    marks: {
+        type: Number,
+        default: 1,
+    },
+    type: {
+        type: String,
+        required: true,
+        enum: ['multiple_choice','true_false', 'fill_in_the_blank', 'short_answer', 'long_answer'],
+    },
 });
 
 const Question = models.Question || model('Question', QuestionSchema);
