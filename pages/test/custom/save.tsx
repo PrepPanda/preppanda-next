@@ -46,11 +46,16 @@ const Save = () => {
             }
         }
         const data = localStorage.getItem("questions");
+        // console.log("data:",data)
         if (data) {
             setFormData({
                 ...formData,
                 questions: JSON.parse(data)
             })
+            //console.log(formData)
+        }
+        else {
+            console.log("No data")
         }
         if (session) {
             setFormData({
@@ -84,6 +89,7 @@ const Save = () => {
 
     const handleSaveTest = async () => {
         try {
+            //console.log("formData:",formData)
             const res = await axios.post("/api/test", formData,
                 {
                     headers: {
@@ -91,8 +97,8 @@ const Save = () => {
                     }
                 }
             )
-            localStorage.removeItem("questions");
-            router.push("/test/my")
+    localStorage.removeItem("questions");
+           router.push("/test/my")
         } catch (error) {
             console.log(error)
         }
