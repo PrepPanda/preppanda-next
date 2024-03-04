@@ -11,7 +11,7 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer";
 // }
 
 const TakeTest = () => {
-  const [timer, setTimer] = useState(300); // Adjust as needed
+  const [timer, setTimer] = useState(0); // Adjust as needed
   const [isTestOver, setIsTestOver] = useState(false);
   const [msg, setMsg] = useState("");
   const [questions, setQuestions] = useState<any[]>([]);
@@ -21,22 +21,35 @@ const TakeTest = () => {
   const [intervals, setIntervals] = useState<number[]>([]); // New state for intervals
   const [startTimer, setStartTimer] = useState(false);
   const questionTimersRef = useRef<number[]>([]);
+  const [testData, setTestData] = useState({
+    completeBy: [],
+    createdAt: "",
+    expiresAt: "",
+    minutes: 0,
+    name: "",
+    owner: "",
+    questions: [],
+    sharedWith: [],
+  });
   useEffect(() => {
+    const tData = JSON.parse(localStorage.getItem("originalTest")!);
+    setTestData(tData);
+    console.log(tData);
     try {
-      axios
-        .post("api/take_test/fetchQuestions")
-        .then(function (response: any) {
-          setMsg(response.data.message);
-          setQuestions(response.data.questions);
-          questionTimersRef.current = Array(
-            response.data.questions.length
-          ).fill(0);
-          setUserAnswers(new Array(response.data.questions.length, null));
-          setStartTimer(true);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      // axios
+      //   .post("api/take_test/fetchQuestions")
+      //   .then(function (response: any) {
+      //     setMsg(response.data.message);
+      setQuestions(testData.questions);
+      questionTimersRef.current = Array(testData.questions.length).fill(0);
+      setTimer(testData.minutes * 60);
+      setStartTimer(true);
+      setIsTestOver(false);
+      //     setUserAnswers(new Array(response.data.questions.length, null));
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   });
     } catch (error: any) {
       console.error("Error fetching test details:", error.message);
     }
@@ -66,7 +79,7 @@ const TakeTest = () => {
 
   useEffect(() => {
     if (timer <= 0) {
-      setIsTestOver(true);
+      // setIsTestOver(true);
     }
   }, [timer]);
 
@@ -103,7 +116,7 @@ const TakeTest = () => {
     }
   };
   return (
-    <div className="max-w-md mx-auto mt-8 p-6 bg-gray-100 rounded-md shadow-md">
+    <div className="max-w-md mx-auto mt-8 p-6 bg-gray-900 rounded-md shadow-md">
       {isTestOver ? (
         <p className="text-2xl font-bold text-center">Test is over!</p>
       ) : (
@@ -115,7 +128,7 @@ const TakeTest = () => {
             </div>
             <CountdownCircleTimer
               isPlaying={startTimer}
-              duration={100}
+              duration={testData.minutes * 60}
               size={60}
               strokeWidth={6}
               colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
