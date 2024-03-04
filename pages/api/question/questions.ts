@@ -34,6 +34,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 })
             );
 
+            console.log("Saved Questions: ", savedQuestions);
+
+            console.log("Out of questions.ts")
             res.status(200).json(savedQuestions);
         }
         catch (e) {

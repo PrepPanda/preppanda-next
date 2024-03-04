@@ -23,22 +23,23 @@ export default async function handler(
             const questions = data.questions;
             const user_id = data.owner;
 
+ console.log("questions: ", questions);
+
             // find user
             const user = await User.findById(user_id);
 
             // Save Questions
             console.log("Saving Questions");
             const saveQuestionsres = await axios.post("http://localhost:3000/api/question/questions", questions,
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
             );
 
-            console.log("Saved Questions: ", saveQuestionsres);
             const savedQuestions = saveQuestionsres.data;
-
+            console.log("Saved Questions: ", savedQuestions);
             const sharedWith = await Promise.all(
                 data.sharedWith.map(async (id: any) => {
                     const fetchGroup = await Group.findById(id);
@@ -53,12 +54,15 @@ export default async function handler(
                 minutes: data.totalMins,
                 owner: user,
                 expiresAt: data.expireDate,
-                questions: savedQuestions.map((question:any) => question._id),
+                questions: savedQuestions.map((question: any) => question._id),
                 sharedWith: sharedWith || [],
             });
 
 
             await newTest.save();
+
+            console.log("Test Created");
+            console.log("Test: ", newTest);
 
             res.status(200).json({ text: "Questions and test created successfully" });
             console.log("Success");
