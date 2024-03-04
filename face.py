@@ -9,7 +9,8 @@ def detect_bounding_box(vid):
     gray_image = cv2.cvtColor(vid, cv2.COLOR_BGR2GRAY)
     faces = face_classifier.detectMultiScale(gray_image, 1.1, 5, minSize=(40, 40))
     if len(faces) > 1:
-        print("Warning: Multiple faces detected!")
+        # Draw warning message on the video frame
+        cv2.putText(vid, "Warning: Multiple faces detected!", (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
     for (x, y, w, h) in faces:
         cv2.rectangle(vid, (x, y), (x + w, y + h), (0, 255, 0), 4)
     return faces
@@ -22,6 +23,10 @@ while True:
     faces = detect_bounding_box(
         video_frame
     )  # apply the function we created to the video frame
+    
+    cv2.imshow(
+        "My Face Detection Project", video_frame
+    )  # display the processed frame in a window named "My Face Detection Project"
 
     if cv2.waitKey(1) & 0xFF == ord("q"):
         break
