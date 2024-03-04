@@ -20,11 +20,12 @@ const CustomTest = () => {
                 console.log('Uploading file:', selectedFile);
                 const formData = new FormData();
                 formData.append('file', selectedFile);
-                const link = process.env.REGEX_API_URL
+                const link = "http://127.0.0.1:5001"
+                console.log(link)
                 const response = await axios.post(link + '/upload', formData);
 
                 console.log('Upload successful:', response.data);
-                localStorage.setItem('uploadedData', JSON.stringify(response.data));
+                localStorage.setItem('questions', JSON.stringify(response.data));
                 router.push('/test/custom/upload/verify');
             } catch (error) {
                 console.error('Error uploading file:', error);
@@ -49,4 +50,5 @@ const CustomTest = () => {
 }
 
 export default CustomTest;
+
 

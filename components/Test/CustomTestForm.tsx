@@ -1,6 +1,6 @@
 "use client";
 
-import { CldUploadButton } from "next-cloudinary";
+import { CldUploadButton, CldImage } from "next-cloudinary";
 import { CloudinaryUploadWidgetResults } from "cloudinary";
 import { useState } from "react";
 import ThemeButton from "../shared/ThemeButton";
@@ -9,9 +9,10 @@ import { IoRemoveCircleOutline } from "react-icons/io5";
 const CustomQuestionForm = () => {
     const [question, setQuestion] = useState({
         question: "",
-        image: "",
-        answer: ""
+        answer: "",
+        marks: 0
     });
+    const [imageUrl, setImageUrl] = useState("");
     const [option, setOption] = useState("");
     const [options, setOptions] = useState<string[]>([]);
 
@@ -37,12 +38,12 @@ const CustomQuestionForm = () => {
         console.log(options);
         // store the question and options in the local storage
         const questions = JSON.parse(localStorage.getItem("questions") || "[]");
-        questions.push({ ...question, options });
+        questions.push({ ...question, options, imageUrl });
         localStorage.setItem("questions", JSON.stringify(questions));
         // reset the form
-        setQuestion({ question: "", image: "", answer: "" });
+        setQuestion({ question: "", answer: "", marks: 0});
+        setImageUrl("");
         setOptions([]);
-
     }
 
     return (
@@ -58,19 +59,30 @@ const CustomQuestionForm = () => {
                                 : "preppanda"
                         }}
                         onSuccess={(results: CloudinaryUploadWidgetResults) => {
-                            const publicId = results.info.public_id;
-                            setQuestion({ ...question, image: publicId });
+                            const public_id = results.info.public_id;
+                            setImageUrl(public_id)
                         }}
                         onError={(results: CloudinaryUploadWidgetResults) => {
+                            console.log(results);
                         }}
                     />
+
+                    {imageUrl != "" &&
+                        <CldImage width="960"
+                            height="600"
+                            src={imageUrl}
+                            sizes="100vw"
+                            alt="Description of my image" />
+                    }
 
                     <input className="bg-muted" type="text" name="answer" id="answer" value={question.answer} onChange={changeQuestion} />
 
                     <input className="bg-muted" type="text" value={option} onChange={changeOption} />
                     <ThemeButton handleClick={addOption} >
                         <p>Add Option</p>
-                        </ThemeButton>
+                    </ThemeButton>
+
+                    <input className="bg-muted" type="number" name="marks" id="marks" value={question.marks} onChange={changeQuestion}/>
 
                     <ul>
                         {options.map((option, index) => (
@@ -93,3 +105,5 @@ const CustomQuestionForm = () => {
 }
 
 export default CustomQuestionForm;
+
+

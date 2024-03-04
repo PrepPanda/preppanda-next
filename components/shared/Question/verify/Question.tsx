@@ -15,7 +15,7 @@ const Question = ({
   const [editedOptions, setEditedOptions] = useState([...questiondata.options]);
 
   const onAnswerChange: Function = (newAnswer: String) => {
-    // console.log(currentQuestionIndex, newAnswer);
+    console.log(currentQuestionIndex, newAnswer);
     setEditedAnswer(newAnswer);
     handleAnswerChange(currentQuestionIndex, newAnswer);
   };

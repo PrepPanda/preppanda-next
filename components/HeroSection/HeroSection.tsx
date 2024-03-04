@@ -8,7 +8,7 @@ const HeroSection = () => {
     <>
       <div className="flex flex-col xl:flex-row items-center justify-center w-screen px-24 my-20 z-10">
         <div className="basis-1/2 flex items-center justify-center">
-          <img src="/images/hero.svg" width={600} height={100} />
+          <img className="hue-rotate-0 brightness-90 contrast-150" src="/images/hero.svg" width={600} height={100} />
         </div>
         <div className="basis-1/2 flex flex-col items-center justify-center sm:items-start sm:pr-36 gap-5">
           <div>
