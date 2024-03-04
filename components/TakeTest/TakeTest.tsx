@@ -21,7 +21,6 @@ const TakeTest = () => {
   const [intervals, setIntervals] = useState<number[]>([]); // New state for intervals
   const [startTimer, setStartTimer] = useState(false);
   const questionTimersRef = useRef<number[]>([]);
-
   useEffect(() => {
     try {
       axios
