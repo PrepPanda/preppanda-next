@@ -1,9 +1,9 @@
-const ThemeButton = ({ text, handleClick = () => { }, disabled=false }: any) => {
+const ThemeButton = ({ children, text, handleClick = () => { }, disabled=false }: any) => {
     return (
         <>
-            <button className="bg-rose-600 px-3 py-2 sm:px-5 sm:py-2 text-white font-semibold rounded-full text-sm sm:text-lg" disabled={disabled}
+            <button className="text-text bg-overlay hover:bg-highlight flex gap-2 items-center rounded-full  px-3 py-2 mobile:px-5 mobile:py-2 text-base font-bold text-lg mobile:text-xl z-40" disabled={disabled}
                 onClick={handleClick}>
-                {text}
+                {children}
             </button>
         </>
     );

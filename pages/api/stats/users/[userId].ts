@@ -1,6 +1,5 @@
 // Purpose: Get the stats of the test which is given by user
 
-
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { connectDB } from '@/utils/dbconnect';
 import UserTestStats from '@/models/user-test-stats';

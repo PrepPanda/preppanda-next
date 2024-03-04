@@ -2,7 +2,7 @@
 // Description: Handles RUD operations for a specific group identified by groupId
 
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Group } from '@/models/group';
+import Group from '@/models/group';
 import { connectDB } from '@/utils/dbconnect';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

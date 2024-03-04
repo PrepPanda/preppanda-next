@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import FileUpload from '@/components/shared/FileUpload';
 import axios from 'axios';
 import { useRouter } from 'next/router';
+import ThemeButton from '@/components/shared/ThemeButton';
+import { RxUpload } from "react-icons/rx";
 
 const CustomTest = () => {
     const router = useRouter();
@@ -15,9 +17,11 @@ const CustomTest = () => {
     const handleUploadClick = async () => {
         if (selectedFile) {
             try {
+                console.log('Uploading file:', selectedFile);
                 const formData = new FormData();
                 formData.append('file', selectedFile);
-                const response = await axios.post('http://127.0.0.1:5001/upload', formData);
+                const link = process.env.REGEX_API_URL
+                const response = await axios.post(link + '/upload', formData);
 
                 console.log('Upload successful:', response.data);
                 localStorage.setItem('uploadedData', JSON.stringify(response.data));
@@ -30,15 +34,16 @@ const CustomTest = () => {
         }
     }
     return (
-        <div className="my-44 w-screen flex flex-col px-8 sm:px-80 items-center justify-center">
+        <div className="py-52 w-screen flex flex-col px-8 sm:px-80 items-center justify-center bg-base">
             <FileUpload onChange={handleFileChange} />
             <p className="text-center mt-20">Selected File: {selectedFileName}</p>
-            <button
-                className="mt-4 z-20 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full cursor-pointer"
-                onClick={handleUploadClick}
+            <br className='my-5' />
+            <ThemeButton
+                handleClick={handleUploadClick}
             >
-                Upload File
-            </button>
+                <p>Upload</p>
+                <RxUpload/>
+            </ThemeButton>
         </div>
     );
 }

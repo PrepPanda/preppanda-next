@@ -17,6 +17,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/Profile/TestDisplay.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "utils/dbconnect.js"],
   "exclude": ["node_modules"]
 }

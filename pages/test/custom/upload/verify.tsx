@@ -62,7 +62,7 @@ const VerifyTest = () => {
                     />
                 ))}
             </div>
-            <div className="flex gap-2 my-4">
+            <div className="flex gap-2 my-4 z-10">
                 <input type="checkbox" name="verified" id="verified" onChange={() => changeVerified()}/>
                 <label>You totaly agree with all the questions and answer and you verified it.</label>
             </div>

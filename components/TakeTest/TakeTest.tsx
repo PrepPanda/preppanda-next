@@ -3,17 +3,18 @@ import axios from "axios";
 import Question from "../shared/Question/verify/Question";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
-interface Question {
-  id: string;
-  question: string;
-  options: string[];
-  correctAnswer: string;
-}
+// interface Question {
+//   id: string;
+//   question: string;
+//   options: string[];
+//   correctAnswer: string;
+// }
+
 const TakeTest = () => {
   const [timer, setTimer] = useState(300); // Adjust as needed
   const [isTestOver, setIsTestOver] = useState(false);
   const [msg, setMsg] = useState("");
-  const [questions, setQuestions] = useState<Question[]>([]);
+  const [questions, setQuestions] = useState<any[]>([]);
   const [userAnswers, setUserAnswers] = useState<string[]>([]);
   const [showCorrectAnswers, setShowCorrectAnswers] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);

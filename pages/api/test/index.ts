@@ -6,6 +6,7 @@ import { connectDB } from "@/utils/dbconnect";
 import Question from "@/models/question";
 import Test from "@/models/test";
 import User from "@/models/user";
+import Group from "@/models/group";
 
 export default async function handler(
     req: NextApiRequest,
@@ -14,12 +15,12 @@ export default async function handler(
     const method = req.method;
     if (method == "POST") {
         try {
-            const data = req.body.testData;
+            const data = req.body;
             await connectDB();
             console.log("Connected");
 
             const questions = data.questions;
-            const user_id = data.user.id;
+            const user_id = data.owner;
 
             // find user
             const user = await User.findById(user_id);
@@ -38,8 +39,8 @@ export default async function handler(
 
             const sharedWith = await Promise.all(
                 data.sharedWith.map(async (id: any) => {
-                    const newUser = await User.findById(id);
-                    return newUser;
+                    const fetchGroup = await Group.findById(id);
+                    return fetchGroup;
                 })
             );
 

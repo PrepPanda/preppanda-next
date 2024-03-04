@@ -10,6 +10,10 @@ const GroupSchema = new Schema({
         ref: 'User',
         required: true,
     },
+    code:{
+        type: String,
+        required: true,
+    },
     members: [{
         type: Schema.Types.ObjectId,
         ref: 'User',
@@ -20,6 +24,7 @@ const GroupSchema = new Schema({
     },
 });
 
-export const Group = models.Group || model('Group', GroupSchema);
+const Group = models.Group || model('Group', GroupSchema);
 
+export default Group;
 
