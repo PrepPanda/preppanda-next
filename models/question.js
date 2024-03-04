@@ -1,6 +1,5 @@
 // Description: Store question { question, options, correctAnswer }
 
-
 import { Schema, model, models } from 'mongoose';
 
 const QuestionSchema = new Schema({
@@ -27,7 +26,7 @@ const QuestionSchema = new Schema({
     },
     type: {
         type: String,
-        required: true,
+        default: 'multiple_choice',
         enum: ['multiple_choice','true_false', 'fill_in_the_blank', 'short_answer', 'long_answer'],
     },
 });

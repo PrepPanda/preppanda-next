@@ -1,6 +1,5 @@
-// params: testId
-// Method: GET
-// Desc: Get all users of a test with whom test was shared
+// Purpose: Get all users that a test is shared with
+
 
 import { NextApiRequest, NextApiResponse } from 'next';
 import { connectDB } from '@/utils/dbconnect';

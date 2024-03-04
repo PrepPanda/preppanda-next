@@ -1,6 +1,4 @@
-// Purpose: Handle requests to /api/test/[testId]
-// Description: Handles CRUD operations for tests
-
+// Purpose: Fetch, Update and Delete a test
 
 import type { NextApiRequest, NextApiResponse } from "next";
 import { connectDB } from "@/utils/dbconnect";
@@ -68,6 +66,15 @@ const handlePut = async (req: NextApiRequest, res: NextApiResponse) => {
                         correctAnswer: question.answer,
                         options: question.options,
                     });
+                    if (question.image) {
+                        newQuestion.image = question.image;
+                    }
+                    if (question.type) {
+                        newQuestion.type = question.type;
+                    }
+                    if (question.marks) {
+                        newQuestion.marks = question.marks;
+                    }
                     return await newQuestion.save();
                 })
             );

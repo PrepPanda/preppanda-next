@@ -61,10 +61,6 @@ const Save = () => {
         }
     }, [session]);
 
-    useEffect(() => {
-        console.log("Updated sharedWith:", formData.sharedWith);
-    }, [formData.sharedWith]);
-
     const handleAddGroup = () => {
         // Check if the group is already added
         if (formData.sharedWith.includes(selectedGroup)) {
@@ -75,13 +71,10 @@ const Save = () => {
             ...prevState,
             sharedWith: [...prevState.sharedWith, selectedGroup]
         }));
-
-        console.log(formData.sharedWith)
     };
 
-    const handleRemoveGroup = (id:string) => {
+    const handleRemoveGroup = (id: string) => {
         return () => {
-            console.log("Removing: ", id)
             setFormData(prevState => ({
                 ...prevState,
                 sharedWith: prevState.sharedWith.filter(curr_id => curr_id !== id)
@@ -91,11 +84,15 @@ const Save = () => {
 
     const handleSaveTest = async () => {
         try {
-            const res = await axios.post("/api/test", formData)
+            const res = await axios.post("/api/test", formData,
+                {
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }
+            )
             localStorage.removeItem("questions");
             router.push("/test/my")
-            console.log(res.data)
-            console.log(formData)
         } catch (error) {
             console.log(error)
         }
@@ -106,21 +103,21 @@ const Save = () => {
             <div className="flex flex-col gap-5 w-screen items-center justify-center bg-base relative z-10">
                 <h1>Okay Time To Save</h1>
                 <input type="text"
-                className="bg-muted"
+                    className="bg-muted"
                     name="testName"
                     value={formData.testName}
                     placeholder="Test Name"
                     onChange={handleChange}
                 />
                 <input type="number"
-                className="bg-muted"
+                    className="bg-muted"
                     name="totalMins"
                     value={formData.totalMins}
                     placeholder="Total Mins"
                     onChange={handleChange}
                 />
                 <input type="date"
-                className="bg-muted"
+                    className="bg-muted"
                     name="expireDate"
                     value={formData.expireDate}
                     placeholder="Expire Date"
@@ -138,8 +135,8 @@ const Save = () => {
                 </select>
 
                 <ThemeButton handleClick={handleAddGroup} >
-                        <p>Add Group</p>
-                    </ThemeButton>
+                    <p>Add Group</p>
+                </ThemeButton>
 
                 <div>
                     {formData.sharedWith && formData.sharedWith.map((id, index) => {
@@ -148,7 +145,7 @@ const Save = () => {
                             <div key={index} className="flex items-center gap-3">
                                 <p>{group.name}</p>
                                 <ThemeButton handleClick={handleRemoveGroup(id)}>
-                                        <IoRemoveCircleOutline/>
+                                    <IoRemoveCircleOutline />
                                 </ThemeButton>
                             </div>
                         )
@@ -157,7 +154,7 @@ const Save = () => {
 
                 <ThemeButton handleClick={handleSaveTest}>
                     <p>Save Test</p>
-                    </ThemeButton>
+                </ThemeButton>
             </div>
         </div>
     )

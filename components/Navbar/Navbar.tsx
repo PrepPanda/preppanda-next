@@ -39,7 +39,7 @@ const Navbar = () => {
                         href=""
                         className="flex items-center space-x-3 rtl:space-x-reverse"
                     >
-                        <img src="/images/logo.svg" className="h-12 tablet:h-16" alt="logo" />
+                        <img src="/images/logo.svg" className="hue-rotate-0 brightness-90 contrast-150 h-12 tablet:h-16" alt="logo" />
                         <span className="self-center font-logo font-bold text-xl mobile:text-3xl whitespace-nowrap">
                             PrepPanda
                         </span>
@@ -91,7 +91,7 @@ const Navbar = () => {
                     >
                         <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
                             <li>
-                                <ThemeLink linkUrl="#" target="_self">
+                                <ThemeLink linkUrl="/" target="_self">
                                     <p>Home</p>
                                 </ThemeLink>
                             </li>

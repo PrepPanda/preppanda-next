@@ -9,7 +9,7 @@ const VerifyTest = () => {
     const [verified, setVerified] = useState(false);
 
     useEffect(() => {
-        const fetched_data = localStorage.getItem('uploadedData');
+        const fetched_data = localStorage.getItem('questions');
         if (fetched_data) {
             const parsedData = JSON.parse(fetched_data).data;
             setData(parsedData);
@@ -24,18 +24,19 @@ const VerifyTest = () => {
         });
     };
 
-    const handleAnswerChange = (index:number, newAnswer: String) => {
+    const handleAnswerChange = (index: number, newAnswer: string) => {
         setData((prevData: any) => {
-            const newData = JSON.parse(JSON.stringify(prevData));
+            const newData = [...prevData];
             newData[index].answer = newAnswer;
             return newData;
         });
-    }
+    };
+
 
     const handleVerified = () => {
         try {
-            localStorage.setItem('uploadedData', JSON.stringify({data: data}));
-            router.push('/test/custom/upload/save');
+            localStorage.setItem('questions', JSON.stringify({data: data}));
+            router.push('/test/custom/save');
         }
         catch(e) {
             console.log("Error: ", e)
@@ -55,10 +56,12 @@ const VerifyTest = () => {
                 {data && data.map((questiondata: any, index: any) => (
                     <Question
                         key={`${index}_${questiondata}_${Math.random()}`}
+                        currentQuestionIndex={index}
                         questiondata={questiondata}
                         uniqueValue={index}
                         deleteQuestion={deleteQuestion}
-                        handleAnswerChange={(newAnswer: String) => handleAnswerChange(index, newAnswer)}
+                        handleAnswerChange={handleAnswerChange}
+
                     />
                 ))}
             </div>
@@ -66,7 +69,9 @@ const VerifyTest = () => {
                 <input type="checkbox" name="verified" id="verified" onChange={() => changeVerified()}/>
                 <label>You totaly agree with all the questions and answer and you verified it.</label>
             </div>
-            <ThemeButton text="verified" handleClick={handleVerified} disabled={!verified}/>
+            <ThemeButton handleClick={handleVerified} disabled={!verified}>
+                <p>Verified</p>
+            </ThemeButton>
         </div>
     );
 };
