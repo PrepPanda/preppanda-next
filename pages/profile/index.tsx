@@ -1,12 +1,23 @@
 // import TestDisplay from "@/components/Profile/TestDisplay";
-import React from "react";
+import { useSession } from "next-auth/react";
+import React, { useEffect } from "react";
 
 const index = () => {
-  return (
-    <div>
+    const session = useSession().data;
 
-    </div>
-  );
+    useEffect(() => {
+        try {
+
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
+
+    return (
+        <div>
+
+        </div>
+    );
 };
 
 export default index;

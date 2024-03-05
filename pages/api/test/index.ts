@@ -15,12 +15,13 @@ export default async function handler(
     const method = req.method;
     if (method == "POST") {
         try {
-            const data = req.body;
+            const data = req.body.formData;
+            console.log("Data: ", data);
             console.log(data)
             await connectDB();
             console.log("Connected");
 
-            const questions = data.questions;
+            const questions = req.body.questions;
             const user_id = data.owner;
 
  console.log("questions: ", questions);

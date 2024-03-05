@@ -14,14 +14,12 @@ const Save = () => {
         testName: string,
         totalMins: number,
         expireDate: string,
-        questions: any[],
         sharedWith: any[],
         owner: string
     }>({
         testName: "",
         totalMins: 0,
         expireDate: "",
-        questions: [],
         sharedWith: [],
         owner: "",
     })
@@ -44,18 +42,6 @@ const Save = () => {
             } catch (error) {
                 console.log(error)
             }
-        }
-        const data = localStorage.getItem("questions");
-        // console.log("data:",data)
-        if (data) {
-            setFormData({
-                ...formData,
-                questions: JSON.parse(data)
-            })
-            //console.log(formData)
-        }
-        else {
-            console.log("No data")
         }
         if (session) {
             setFormData({
@@ -89,16 +75,22 @@ const Save = () => {
 
     const handleSaveTest = async () => {
         try {
-            //console.log("formData:",formData)
-            const res = await axios.post("/api/test", formData,
+            // Get the questions from the local storage
+            const localStorageData = localStorage.getItem("questions");
+            if (!localStorageData) {
+                return;
+            }
+            const questions = JSON.parse(localStorageData);
+            console.log(questions);
+            const res = await axios.post("/api/test", { formData, questions },
                 {
                     headers: {
                         "Content-Type": "application/json"
                     }
                 }
             )
-    localStorage.removeItem("questions");
-           router.push("/test/my")
+            localStorage.removeItem("questions");
+            router.push("/test/my")
         } catch (error) {
             console.log(error)
         }
@@ -132,7 +124,6 @@ const Save = () => {
 
                 {/* make a dropdown menu for group  */}
                 <select className="bg-muted" name="group" id="group" onChange={(e) => {
-                    console.log(e.target.value)
                     setSelectedGroup(e.target.value)
                 }}>
                     {groups.map((group, index) => (
