@@ -101,7 +101,7 @@ const Navbar = () => {
                                 </ThemeLink>
                             </li>
                             <li>
-                                <ThemeLink linkUrl="/test/custom" target="_self">
+                                <ThemeLink linkUrl="/test" target="_self">
                                     <p>Test</p>
                                 </ThemeLink>
                             </li>
