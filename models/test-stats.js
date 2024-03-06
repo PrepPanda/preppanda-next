@@ -26,7 +26,7 @@ const TestStatsSchema = new Schema({
     },
     questions: [{
         type: Schema.Types.ObjectId,
-        ref: 'QuestionStat'
+        ref: 'QuestionStats'
     }]
 });
 

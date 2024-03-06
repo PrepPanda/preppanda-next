@@ -1,6 +1,5 @@
 // Description: Store the test stats for user { userId, testId, attempts, avgScore, questions }
 
-
 import { Schema, model, models } from "mongoose";
 
 const UserTestStatsSchema = new Schema({
@@ -16,23 +15,20 @@ const UserTestStatsSchema = new Schema({
     },
     attempts: {
         type: Number,
-        required: true,
         default: 0,
     },
     avgScore: {
         type: Number,
-        required: true,
         default: 0,
     },
     avgTime: {
         type: Number,
-        required: true,
         default: 0,
     },
     questions: [
         {
         type: Schema.Types.ObjectId,
-        ref: "QuestionStat",
+        ref: "QuestionStats",
         },
     ],
 });
