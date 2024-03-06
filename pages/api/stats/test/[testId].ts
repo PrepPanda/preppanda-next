@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     switch (method) {
         case 'GET': {
             try {
-                connectDB();
+                await connectDB();
                 const testStats = await TestStats.findOne({ testId: testId });
                 if (!testStats) {
                     return res.status(404).json({ error: 'Test Stats not found' });
@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         case 'POST': {
             try {
                 const { score, time, questionsStats } = req.body;
-                connectDB();
+                await connectDB();
 
                 // Find or create test stats
                 let testStats = await TestStats.findOne({ testId: testId });
