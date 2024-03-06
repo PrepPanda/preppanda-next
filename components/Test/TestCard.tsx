@@ -1,21 +1,17 @@
 import axios from "axios";
 import ThemeButton from "../shared/ThemeButton";
 import { useSession } from "next-auth/react";
-import  CryptoJS  from "crypto-js";
+import CryptoJS from "crypto-js";
 
-const TestCard = ({test}:any ) => {
+const TestCard = ({ test }: any) => {
     const startTest = async () => {
-        try{
+        try {
             const res = await axios.get('/api/test/' + test._id);
-            const testData:any = res.data;
-            console.log(res.data.questions);
-            for(let i = 0; i < testData.questions.length; i++) {
-                const currentAnswer = testData.questions[i].correctAnswer;
-                testData.questions[i].correctAnswer = CryptoJS.AES.encrypt(currentAnswer, process.env.NEXT_PUBLIC_CRYPTO_SECRET).toString();
-            }
-            localStorage.setItem('originalTest', JSON.stringify(testData));
+            const testData: any = res.data;
+            const encyrptedTestData = CryptoJS.AES.encrypt(JSON.stringify(testData), process.env.NEXT_PUBLIC_CRYPTO_SECRET).toString();
+            localStorage.setItem('originalTest', encyrptedTestData);
         }
-        catch(error) {
+        catch (error) {
             console.log(error)
         }
     }
