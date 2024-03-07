@@ -15,7 +15,7 @@ const TestCard = ({ test }: any) => {
         const currentAnswer = testData.questions[i].correctAnswer;
         testData.questions[i].correctAnswer = CryptoJS.AES.encrypt(
           currentAnswer,
-          process.env.NEXT_PUBLIC_CRYPTO_SECRET
+          process.env.NEXT_PUBLIC_CRYPTO_SECRET!
         ).toString();
       }
       localStorage.setItem("originalTest", JSON.stringify(testData));
