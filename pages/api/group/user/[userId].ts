@@ -1,3 +1,5 @@
+// Purpose: Get all groups that a user is a member of or owns based on the user ID
+
 import type { NextApiRequest, NextApiResponse } from 'next';
 import Group from '@/models/group';
 import { connectDB } from '@/utils/dbconnect';
