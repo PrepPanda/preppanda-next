@@ -1,82 +1,53 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import Question from "../shared/Question/verify/Question";
-import { CountdownCircleTimer } from "react-countdown-circle-timer";
-
-// interface Question {
-//   id: string;
-//   question: string;
-//   options: string[];
-//   correctAnswer: string;
-// }
+import CryptoJS from "crypto-js";
+import AnswerButtons from "../Monitor/AnswerButton";
+import Questions from "../Monitor/Questions";
+import TestTimer from "../Monitor/TestTimer";
+import QuestionListButtons from "../Monitor/QuestionListButtons";
 
 const TakeTest = () => {
   const [timer, setTimer] = useState(300); // Adjust as needed
   const [isTestOver, setIsTestOver] = useState(false);
-  const [msg, setMsg] = useState("");
-  const [questions, setQuestions] = useState<any[]>([]);
-  const [userAnswers, setUserAnswers] = useState<string[]>([]);
+  const [questions, setQuestions] = useState([]);
+  const [userAnswers, setUserAnswers] = useState([]);
   const [showCorrectAnswers, setShowCorrectAnswers] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [intervals, setIntervals] = useState<number[]>([]); // New state for intervals
-  const [startTimer, setStartTimer] = useState(false);
-  const questionTimersRef = useRef<number[]>([]);
+  const [questionTimers, setQuestionTimers] = useState([]);
 
   useEffect(() => {
     try {
-      axios
-        .post("api/take_test/fetchQuestions")
-        .then(function (response: any) {
-          setMsg(response.data.message);
-          setQuestions(response.data.questions);
-          questionTimersRef.current = Array(
-            response.data.questions.length
-          ).fill(0);
-          setUserAnswers(new Array(response.data.questions.length, null));
-          setStartTimer(true);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    } catch (error: any) {
+      const encryptedTestData = localStorage.getItem("originalTest");
+      const bytes = CryptoJS.AES.decrypt(
+        encryptedTestData,
+        process.env.NEXT_PUBLIC_CRYPTO_SECRET
+      );
+      const testData = JSON.parse(
+        bytes.toString(CryptoJS.enc.Utf8)
+      );
+      const { questions, minutes } = testData;
+      const time = 60 * minutes;
+      setQuestions(questions);
+      setTimer(time);
+    } catch (error) {
       console.error("Error fetching test details:", error.message);
     }
+  }, []);
 
+  useEffect(() => {
     const countdown = setInterval(() => {
       setTimer((prevTimer) => prevTimer - 1);
     }, 1000);
 
-    setIntervals((prevIntervals) => [...prevIntervals, countdown] as number[]);
-
     return () => {
-      intervals.forEach((interval) => clearInterval(interval as number));
+      clearInterval(countdown);
     };
   }, []);
 
-  useEffect(() => {
-    const questionInterval = setInterval(() => {
-      questionTimersRef.current[currentQuestionIndex] += 1;
-    }, 1000);
-
-    setIntervals(
-      (prevIntervals) => [...prevIntervals, questionInterval] as number[]
-    );
-
-    return () => clearInterval(questionInterval);
-  }, [currentQuestionIndex]);
-
-  useEffect(() => {
-    if (timer <= 0) {
-      setIsTestOver(true);
-    }
-  }, [timer]);
-
-  const handleAnswerSubmit = (index: number, selectedOption: string) => {
-    console.log(index, selectedOption);
+  const handleAnswerSubmit = (index, selectedOption) => {
     const updatedUserAnswers = [...userAnswers];
     updatedUserAnswers[index] = selectedOption;
     setUserAnswers(updatedUserAnswers);
-    // console.log(updatedUserAnswers);
   };
 
   const handleNextQuestion = () => {
@@ -86,100 +57,57 @@ const TakeTest = () => {
   const handleSubmitQuiz = () => {
     setShowCorrectAnswers(true);
     setIsTestOver(true);
-
-    intervals.forEach((interval) => clearInterval(interval));
+    clearInterval(questionTimersRef.current[currentQuestionIndex]);
 
     try {
       const data = { questions, userAnswers, questionTimersRef };
       axios
         .post("api/take_test/evaluate", data)
-        .then(function (response) {
+        .then(function(response) {
           console.log(response);
         })
-        .catch(function (error) {
+        .catch(function(error) {
           console.log(error);
         });
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error fetching test details:", error.message);
     }
   };
+
+  const handleQuestionTimer = (timeSpent) => {
+    const updatedTimers = [...questionTimers];
+    updatedTimers[currentQuestionIndex] = timeSpent;
+    setQuestionTimers(updatedTimers);
+  };
+
   return (
-    <div className="max-w-md mx-auto mt-8 p-6 bg-gray-100 rounded-md shadow-md">
+    <div className="max-w-md mx-auto mt-8 p-6 rounded-md shadow-md">
       {isTestOver ? (
         <p className="text-2xl font-bold text-center">Test is over!</p>
       ) : (
         <div>
-          <div className="flex justify-between items-center mx-5">
-            <div>
-              {Math.floor(questionTimersRef.current[currentQuestionIndex] / 60)}
-              :{questionTimersRef.current[currentQuestionIndex] % 60}
-            </div>
-            <CountdownCircleTimer
-              isPlaying={startTimer}
-              duration={100}
-              size={60}
-              strokeWidth={6}
-              colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-              colorsTime={[7, 5, 2, 0]}
-              onComplete={() => {
-                setIsTestOver(true);
-                return {};
-              }}
-            >
-              {({ remainingTime }) => {
-                const minutes = Math.floor(remainingTime / 60);
-                const seconds = remainingTime % 60;
-
-                return `${minutes}:${seconds}`;
-              }}
-            </CountdownCircleTimer>
-          </div>
+          <TestTimer
+            timer={timer}
+            startTimer={true}
+            setQuestionTimer={handleQuestionTimer}
+          />
           <form>
-            {currentQuestionIndex < questions.length ? (
-              <Question
-                key={currentQuestionIndex}
-                currentQuestionIndex={currentQuestionIndex}
-                questiondata={questions[currentQuestionIndex]}
-                uniqueValue={Math.random()}
-                disabled={false}
-                inTest={true}
-                handleAnswerChange={handleAnswerSubmit}
-              />
-            ) : (
-              <p>No more questions</p>
-            )}
-            <button
-              type="button"
-              onClick={handleNextQuestion}
-              disabled={showCorrectAnswers}
-              className="bg-green-500 text-white px-4 py-2 rounded-md"
-            >
-              Next Question
-            </button>
-            <button
-              type="button"
-              onClick={handleSubmitQuiz}
-              disabled={showCorrectAnswers}
-              className="bg-blue-500 text-white px-4 py-2 rounded-md"
-            >
-              Submit Quiz
-            </button>
+            <Questions
+              questions={questions}
+              currentQuestionIndex={currentQuestionIndex}
+              handleAnswerSubmit={handleAnswerSubmit}
+            />
+            <AnswerButtons
+              handleNextQuestion={handleNextQuestion}
+              handleSubmitQuiz={handleSubmitQuiz}
+              showCorrectAnswers={showCorrectAnswers}
+            />
+            <QuestionListButtons
+              questions={questions}
+              currentQuestionIndex={currentQuestionIndex}
+              setCurrentQuestionIndex={setCurrentQuestionIndex}
+            />
           </form>
-          <div className="grid grid-cols-5">
-            {questions.map((question, index) => (
-              <button
-                key={index + 1}
-                className={`m-1 rounded-md ${
-                  index === currentQuestionIndex
-                    ? "bg-green-500 text-white"
-                    : "bg-gray-500 text-white"
-                }`}
-                onClick={() => setCurrentQuestionIndex(index)}
-              >
-                <p>{index + 1}</p>
-              </button>
-            ))}
-          </div>
         </div>
       )}
     </div>

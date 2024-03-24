@@ -1,6 +1,5 @@
-import CreateTest from "@/components/TakeTest/CreateTest";
-import TakeTest from "@/components/TakeTest/TakeTest";
 import React from "react";
+import TakeTest from "@/components/TakeTest/TakeTest";
 
 const index = () => {
   return (
