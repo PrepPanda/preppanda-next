@@ -38,11 +38,10 @@ export default async function handler(
     }
 
     try {
+
       axios
         .post("api/stats/")
-        .then(function (response: any) {
-          
-        })
+        .then(function (response: any) {})
         .catch(function (error) {
           console.log(error);
         });

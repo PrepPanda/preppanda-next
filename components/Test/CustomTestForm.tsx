@@ -16,22 +16,22 @@ const CustomQuestionForm = () => {
     const [option, setOption] = useState("");
     const [options, setOptions] = useState<string[]>([]);
 
-    const changeQuestion = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setQuestion({ ...question, [e.target.name]: e.target.value });
-    }
+  const changeQuestion = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuestion({ ...question, [e.target.name]: e.target.value });
+  };
 
-    const changeOption = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setOption(e.target.value);
-    }
+  const changeOption = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setOption(e.target.value);
+  };
 
-    const addOption = () => {
-        setOptions([...options, option]);
-        setOption("");
-    }
+  const addOption = () => {
+    setOptions([...options, option]);
+    setOption("");
+  };
 
-    const removeOption = (index: number) => {
-        setOptions(options.filter((_, i) => i !== index));
-    }
+  const removeOption = (index: number) => {
+    setOptions(options.filter((_, i) => i !== index));
+  };
 
     const submit = () => {
         console.log(question);
@@ -95,14 +95,14 @@ const CustomQuestionForm = () => {
                         ))}
                     </ul>
 
-                    <ThemeButton handleClick={submit} >
-                        <p>Add Question</p>
-                    </ThemeButton>
-                </div>
-            </div>
-        </>
-    )
-}
+          <ThemeButton handleClick={submit}>
+            <p>Add Question</p>
+          </ThemeButton>
+        </div>
+      </div>
+    </>
+  );
+};
 
 export default CustomQuestionForm;
 

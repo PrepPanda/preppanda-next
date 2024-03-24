@@ -7,7 +7,7 @@ import TestTimer from "../Monitor/TestTimer";
 import QuestionListButtons from "../Monitor/QuestionListButtons";
 
 const TakeTest = () => {
-  const [timer, setTimer] = useState(300); // Adjust as needed
+  const [timer, setTimer] = useState(0); // Adjust as needed
   const [isTestOver, setIsTestOver] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [userAnswers, setUserAnswers] = useState([]);
@@ -16,6 +16,9 @@ const TakeTest = () => {
   const [questionTimers, setQuestionTimers] = useState([]);
 
   useEffect(() => {
+    const tData = JSON.parse(localStorage.getItem("originalTest")!);
+    setTestData(tData);
+    console.log(tData);
     try {
       const encryptedTestData = localStorage.getItem("originalTest");
       const bytes = CryptoJS.AES.decrypt(
