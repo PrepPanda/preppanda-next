@@ -1,5 +1,5 @@
 import React from "react";
-import Question from "@/components/shared/Question/verify/Question";
+import Question from "./Question";
 
 const Questions = ({
   questions,
@@ -26,4 +26,5 @@ const Questions = ({
 };
 
 export default Questions;
+
 

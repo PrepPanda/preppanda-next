@@ -6,7 +6,7 @@ const Question = ({
   questiondata,
   uniqueValue,
   deleteQuestion,
-  handleAnswerChange = () => {},
+  handleAnswerChange = () => { },
   disabled = false,
   inTest = false,
 }: any) => {
@@ -54,3 +54,5 @@ const Question = ({
 };
 
 export default Question;
+
+

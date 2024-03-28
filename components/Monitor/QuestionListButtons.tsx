@@ -5,19 +5,19 @@ const QuestionListButtons = ({
   currentQuestionIndex,
   setCurrentQuestionIndex,
 }: any) => {
-  const handleQuestionChange = (index) => {
+  const handleQuestionChange = (index: number) => {
     setCurrentQuestionIndex(index);
   };
 
   return (
     <div className="grid grid-cols-5">
-      {questions.map((question, index) => (
+      {questions.map((question: any, index: number) => (
         <button
           key={index + 1}
           className={`m-1 rounded-md ${index === currentQuestionIndex
             ? "bg-green-500 text-white"
             : "bg-gray-500 text-white"
-          }`}
+            }`}
           onClick={() => handleQuestionChange(index)}
         >
           <p>{index + 1}</p>
@@ -28,3 +28,5 @@ const QuestionListButtons = ({
 };
 
 export default QuestionListButtons;
+
+
