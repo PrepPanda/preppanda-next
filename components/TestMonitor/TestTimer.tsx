@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 
-const TestTimer = ({ startTime, duration }: { startTime: Date; duration: number }) => {
+const TestTimer = ({ startTime, duration, handleSubmitQuiz }: any) => {
   const [remainingTime, setRemainingTime] = useState<number>(duration * 60);
 
   useEffect(() => {
@@ -18,6 +18,12 @@ const TestTimer = ({ startTime, duration }: { startTime: Date; duration: number 
     return () => clearTimeout(timer);
   }, [remainingTime]); // Update the timer every second
 
+  useEffect(() => {
+    if (remainingTime === 0) {
+      handleSubmitQuiz();
+    }
+  }, [remainingTime]);
+
   const endTime = startTime.getTime() + duration * 60 * 1000;
 
   const formatTime = (time: number) => {
@@ -27,7 +33,7 @@ const TestTimer = ({ startTime, duration }: { startTime: Date; duration: number 
   };
 
   return (
-    <div className="w-screen flex items-center justify-center mt-20 text-3xl">
+    <div className="w-screen flex items-center justify-center  text-3xl">
       {remainingTime > 0 ? (
         <div>{formatTime(remainingTime)}</div>
       ) : (

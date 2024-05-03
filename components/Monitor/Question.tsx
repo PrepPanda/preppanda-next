@@ -49,7 +49,7 @@ const Question = ({ questiondata, uniqueValue }: any) => {
   }
 
   return (
-    <div className="relative border-gray-300 flex flex-col rounded-md p-4 px-10 border-2 m-4 basis-1/4">
+    <div className="relative border-gray-300 flex flex-col rounded-md p-4 px-10 border-2 m-4 basis-1/4 text-3xl">
       {questiondata.question}
       <hr className="my-4" />
       <div className="flex flex-col">

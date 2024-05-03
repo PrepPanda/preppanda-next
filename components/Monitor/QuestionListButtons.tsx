@@ -10,11 +10,11 @@ const QuestionListButtons = ({
   };
 
   return (
-    <div className="grid grid-cols-5">
+    <div className="grid grid-cols-10 gap-2">
       {questions.map((question: any, index: number) => (
         <button
           key={index + 1}
-          className={`m-1 rounded-md ${index === currentQuestionIndex
+          className={`rounded-full ${index === currentQuestionIndex
             ? "bg-green-500 text-white"
             : "bg-gray-500 text-white"
             }`}

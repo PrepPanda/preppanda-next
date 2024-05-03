@@ -8,12 +8,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import Webcam from 'react-webcam';
 import io from 'socket.io-client';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 const socket = io('http://localhost:5000');
 
 const TestMonitor = () => {
   const webcamRef = useRef(null);
   const [faceCount, setFaceCount] = useState(0);
+  const [testActive, setTestActive] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     // Set up a timer to capture frames periodically
@@ -26,6 +29,7 @@ const TestMonitor = () => {
   }, []);
 
   const captureFrame = () => {
+    if(!testActive) return
     const imageSrc = webcamRef.current.getScreenshot();
     const imageData = imageSrc.split(',')[1]; // Extract base64 data from data URL
     const byteCharacters = atob(imageData); // Decode base64 to byte characters
@@ -49,6 +53,20 @@ const TestMonitor = () => {
     };
   }, []);
 
+  useEffect(() => {
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
+  const handleVisibilityChange = () => {
+    if (document.visibilityState === 'hidden') {
+      setTestActive(false);
+    } else {
+      setTestActive(true);
+    }
+  };
 
   const session = useSession().data
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
@@ -122,11 +140,11 @@ const TestMonitor = () => {
     try {
       const res = await axios.post("api/test/complete", data)
       console.log(res)
+      router.push('/test/given')
     }
     catch (e) {
       console.log("There is error in the request")
     }
-
   }
 
   return (
@@ -135,11 +153,13 @@ const TestMonitor = () => {
         audio={false}
         ref={webcamRef}
         screenshotFormat="image/jpeg"
+        width={200}
       />
-      <p>Number of Faces: {faceCount}</p>
+      <p>Persons: {faceCount}</p>
       {/* Your TestMonitor JSX content */}
       {startTime &&
-        <TestTimer startTime={startTime} duration={testData.minutes} />
+        <TestTimer startTime={startTime} duration={testData.minutes} handleSubmitQuiz={handleSubmitQuiz}
+        />
       }
       {
         testData &&
@@ -160,7 +180,5 @@ const TestMonitor = () => {
     </>
   );
 };
-
-export default TestMonitor;
-
-
+      
+export default TestMonitor

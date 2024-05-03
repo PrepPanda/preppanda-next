@@ -5,12 +5,12 @@ import { CldUploadButton, CldImage } from "next-cloudinary";
 import { CloudinaryUploadWidgetResults } from "cloudinary";
 import ThemeButton from "../shared/ThemeButton";
 import { IoRemoveCircleOutline } from "react-icons/io5";
+import toast from "react-hot-toast";
 
 const CustomQuestionForm = () => {
   const [question, setQuestion] = useState({
     question: "",
     answer: "",
-    imageUrl: "",
     question_type: "multiple_choice",
     marks: 0
   });
@@ -48,6 +48,17 @@ const CustomQuestionForm = () => {
     localStorage.setItem("questions", JSON.stringify(questions));
     // reset the form
     setQuestion({ question: "", answer: "", marks: 0, question_type: "multiple_choice" });
+    toast('Question Created',
+        {
+          icon: '🎉',
+          style: {
+            borderRadius: '10px',
+            background: '#524f67',
+            color: '#e0def4',
+            fontWeight: 'bold',
+          },
+        }
+      );
     setImageUrl("");
     setOptions([]);
   };
@@ -58,11 +69,11 @@ const CustomQuestionForm = () => {
         <div className="relative w-screen flex flex-col gap-5 items-center justify-center bg-base">
           <h1 className="text-5xl font-bold text-gold">Create Questions</h1>
           <input
-            className="bg-muted"
+            className="bg-muted rounded-full px-4 py-2"
             type="text"
             name="question"
             id="question"
-            placeholder="Your Question"
+            placeholder="Write Question"
             value={question.question}
             onChange={changeQuestion}
           />
@@ -79,8 +90,9 @@ const CustomQuestionForm = () => {
             onError={(results: CloudinaryUploadWidgetResults) => {
               console.log(results);
             }}
+            className="text-text bg-overlay hover:bg-highlight flex gap-2 items-center rounded-full  px-3 py-2 mobile:px-5 mobile:py-2 text-base font-bold text-lg mobile:text-xl z-40"
           >
-            Upload Image
+            Have image for questsion?
           </CldUploadButton>
 
           {imageUrl !== "" && (
@@ -94,7 +106,7 @@ const CustomQuestionForm = () => {
           )}
 
           <input
-            className="bg-muted"
+            className="bg-muted rounded-full px-3 py-2"
             placeholder="Answer"
             type="text"
             name="answer"
@@ -103,28 +115,19 @@ const CustomQuestionForm = () => {
             onChange={changeQuestion}
           />
 
-          <input
-            className="bg-muted"
-            placeholder="Option"
-            type="text"
-            value={option}
-            onChange={changeOption}
-          />
-          <ThemeButton handleClick={addOption}>
-            <p>Add Option</p>
-          </ThemeButton>
-
-          <label>Marks</label>
-          <input
-            className="bg-muted"
-            type="number"
-            name="marks"
-            id="marks"
-            value={question.marks}
-            onChange={changeQuestion}
-          />
-
-          <ul>
+          <div className="flex gap-3">
+            <input
+              className="bg-muted rounded-full px-3 py-2"
+              placeholder="Option"
+              type="text"
+              value={option}
+              onChange={changeOption}
+            />
+            <ThemeButton handleClick={addOption}>
+              <p>Add Option</p>
+            </ThemeButton>
+          </div>
+          <ul className="flex gap-3">
             {options.map((option, index) => (
               <li key={index} className="flex items-center gap-5">
                 {option}
@@ -135,56 +138,68 @@ const CustomQuestionForm = () => {
             ))}
           </ul>
 
-          <label>Type</label>
-          <div className="flex gap-2">
+          <div className="flex gap-3 justify-center items-center">
+            <label className="text-foam font-semibold text-2xl">Marks</label>
             <input
-              type="radio"
-              id="multiple_choice"
-              name="question_type"
-              value="multiple_choice"
-              checked={question.question_type === "multiple_choice"}
-              onChange={changeType}
+              className="bg-muted rounded-full px-3 py-2"
+              type="number"
+              name="marks"
+              id="marks"
+              value={question.marks}
+              onChange={changeQuestion}
             />
-            <label htmlFor="multiple_choice">Multiple Choice</label>
-            <input
-              type="radio"
-              id="true_false"
-              name="question_type"
-              value="true_false"
-              checked={question.question_type === "true_false"}
-              onChange={changeType}
-            />
-            <label htmlFor="true_false">True/False</label>
-            <input
-              type="radio"
-              id="fill_in_the_blank"
-              name="question_type"
-              value="fill_in_the_blank"
-              checked={question.question_type === "fill_in_the_blank"}
-              onChange={changeType}
-            />
-            <label htmlFor="fill_in_the_blank">Fill in the blank</label>
-            <input
-              type="radio"
-              id="short_answer"
-              name="question_type"
-              value="short_answer"
-              checked={question.question_type === "short_answer"}
-              onChange={changeType}
-            />
-            <label htmlFor="short_answer">Short Answer</label>
-            <input
-              type="radio"
-              id="long_answer"
-              name="question_type"
-              value="long_answer"
-              checked={question.question_type === "long_answer"}
-              onChange={changeType}
-            />
-            <label htmlFor="long_answer">Long Answer</label>
-
           </div>
 
+          <div className="flex gap-3 justify-center items-center">
+            <label className="text-foam font-semibold text-2xl">Type</label>
+            <div className="flex gap-2">
+              <input
+                type="radio"
+                id="multiple_choice"
+                name="question_type"
+                value="multiple_choice"
+                checked={question.question_type === "multiple_choice"}
+                onChange={changeType}
+              />
+              <label htmlFor="multiple_choice">Multiple Choice</label>
+              <input
+                type="radio"
+                id="true_false"
+                name="question_type"
+                value="true_false"
+                checked={question.question_type === "true_false"}
+                onChange={changeType}
+              />
+              <label htmlFor="true_false">True/False</label>
+              <input
+                type="radio"
+                id="fill_in_the_blank"
+                name="question_type"
+                value="fill_in_the_blank"
+                checked={question.question_type === "fill_in_the_blank"}
+                onChange={changeType}
+              />
+              <label htmlFor="fill_in_the_blank">Fill in the blank</label>
+              <input
+                type="radio"
+                id="short_answer"
+                name="question_type"
+                value="short_answer"
+                checked={question.question_type === "short_answer"}
+                onChange={changeType}
+              />
+              <label htmlFor="short_answer">Short Answer</label>
+              <input
+                type="radio"
+                id="long_answer"
+                name="question_type"
+                value="long_answer"
+                checked={question.question_type === "long_answer"}
+                onChange={changeType}
+              />
+              <label htmlFor="long_answer">Long Answer</label>
+            </div>
+          </div>
           <ThemeButton handleClick={submit}>
             <p>Add Question</p>
           </ThemeButton>

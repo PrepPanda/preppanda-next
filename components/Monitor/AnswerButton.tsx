@@ -7,13 +7,15 @@ const AnswerButtons = ({
   handlePrevQuestion
 }: any) => {
   return (
-    <div className="flex justify-between">
-      <ThemeButton handleClick={handleNextQuestion}>
-        Next
-      </ThemeButton>
+    <div className="flex justify-between my-4 px-5">
+      <div className="flex gap-5">
       <ThemeButton handleClick={handlePrevQuestion}>
         Previous
       </ThemeButton>
+      <ThemeButton handleClick={handleNextQuestion}>
+        Next
+      </ThemeButton>
+      </div>
       <ThemeButton handleClick={handleSubmitQuiz}>
         Submit
       </ThemeButton>

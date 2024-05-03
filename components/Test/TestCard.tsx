@@ -3,9 +3,13 @@ import ThemeButton from "../shared/ThemeButton";
 import { useSession } from "next-auth/react";
 import CryptoJS from "crypto-js";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const TestCard = ({ test }: any) => {
   const router = useRouter();
+  const [expired, setExpired] = useState(false);
+  const [given, setGiven] = useState(false);
+
   const startTest = async () => {
     try {
       const res = await axios.get("/api/test/" + test._id);
@@ -36,18 +40,39 @@ const TestCard = ({ test }: any) => {
     }
   };
 
+  useEffect(() => {
+    const date = new Date().toISOString();
+    const expiresAt = test.expiresAt;
+    if (expiresAt < date) {
+      setExpired(true);
+    }
+  }, []);
+
   const userId = useSession().data?.user.id;
+
+  useEffect(() => {
+    const completedBy = test.completeBy;
+    if (completedBy.includes(userId)) {
+      setGiven(true);
+    }
+  }, []);
+
+  const handleViewTestStats = () => {
+    router.push(`/test/my/stats/${test._id}`);
+  }
 
   return (
     <>
       <h2>{test.name}</h2>
-      <p className="text-rose">{test.minutes}mins</p>
-      <ThemeButton handleClick={startTest}>Start Test</ThemeButton>
+      <p className="text-rose">{test.minutes}<span className="text-sm">mins</span></p>
+      {!expired && !given && <ThemeButton handleClick={startTest}>Start Test</ThemeButton>}
+      {given ? <p className='text-gold'>Given</p> : expired && <p className='text-rose'>Expired</p>}
       {userId === test.owner && (
-        <ThemeButton handleClick={() => console.log("clicked")}>
-          Edit Test
+        <ThemeButton handleClick={handleViewTestStats}>
+          View Test Stats
         </ThemeButton>
       )}
+      
     </>
   );
 };

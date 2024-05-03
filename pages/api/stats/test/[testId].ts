@@ -13,7 +13,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         case 'GET': {
             try {
                 await connectDB();
-                const testStats = await TestStats.findOne({ testId: testId });
+                console.log("testId:", testId)
+                const testStats = await TestStats.findOne({ testId: testId }).populate("questions");
                 if (!testStats) {
                     return res.status(404).json({ error: 'Test Stats not found' });
                 }

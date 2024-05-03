@@ -1,47 +1,64 @@
 import { useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import ThemeButton from "../shared/ThemeButton";
+import toast from "react-hot-toast";
 
-const CreateGroup = ({ onGroupCreated }: { onGroupCreated: (newGroup: any) => void }) => {
-    const session = useSession().data;
-    const [newGroupName, setNewGroupName] = useState("");
-    
-    const updateGroupName = (event: React.ChangeEvent<HTMLInputElement>) => {
-        event.preventDefault();
-        setNewGroupName(event.target.value);
-    }
+const CreateGroup = ({ onGroupCreated, ...props }: any) => {
+  const session = useSession().data;
+  const [newGroupName, setNewGroupName] = useState("");
 
-    const createGroup = async (event: any) => {
-        event.preventDefault();
-        try {
-            if (!session) {
-                return;
-            }
-            const res = await axios.post("/api/group/", {
-                name: newGroupName,
-                owner: session?.user.id,
-            },
-            {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-            )
-            console.log(res);
+  const updateGroupName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    setNewGroupName(event.target.value);
+  }
+
+  const createGroup = async (event: any) => {
+    event.preventDefault();
+    try {
+      if (!session) {
+        return;
+      }
+      const res = await axios.post("/api/group/", {
+        name: newGroupName,
+        owner: session?.user.id,
+      },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
         }
-        catch(error) {
-            console.log(error);
+      )
+      props.setUpdate((prev: boolean) => !prev)
+      console.log(res);
+      toast('Group Created',
+        {
+          icon: '🎉',
+          style: {
+            borderRadius: '10px',
+            background: '#524f67',
+            color: '#e0def4',
+            fontWeight: 'bold',
+          },
         }
-        console.log("Group with name:", newGroupName);
+      );
     }
-    
-    return (
-        <div className="flex gap-5 z-10">
-            <h1>Create Group</h1>
-            <input className="bg-muted" value={newGroupName} name="newGroupName" id="newGroupName" onChange={updateGroupName} />
-            <button onClick={createGroup}>Create</button>
-        </div>
-    )
+    catch (error) {
+      console.log(error);
+    }
+    console.log("Group with name:", newGroupName);
+  }
+
+  return (
+    <div className="flex flex-col justify-center items-center gap-5 z-10">
+      <h1 className="text-3xl font-black mb-4">Create Group</h1>
+      <div className="flex gap-5">
+        <input className="bg-muted rounded-full px-3" value={newGroupName} name="newGroupName" id="newGroupName" onChange={updateGroupName} placeholder="Enter Group Name" />
+        <ThemeButton handleClick={createGroup}>Create</ThemeButton>
+      </div>
+
+    </div>
+  )
 }
 
 export default CreateGroup;
