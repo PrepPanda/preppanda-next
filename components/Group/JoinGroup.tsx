@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import ThemeButton from "../shared/ThemeButton";
+import PandaButton from "../panda/PandaButton";
 import toast from 'react-hot-toast';
 
 const JoinGroup = ({ ...props }: any) => {
@@ -29,24 +29,22 @@ const JoinGroup = ({ ...props }: any) => {
           }
         }
       );
-      console.log(res);
       toast('Joined Group Successfully!',
-      {
-        icon: '🙆🏼‍♂️',
-        style: {
-          borderRadius: '10px',
-          background: '#524f67',
-          color: '#e0def4',
-          fontWeight: 'bold',
-        },
-      }
-    );
+        {
+          icon: '🙆🏼‍♂️',
+          style: {
+            borderRadius: '10px',
+            background: '#524f67',
+            color: '#e0def4',
+            fontWeight: 'bold',
+          },
+        }
+      );
       props.setUpdate((prev: boolean) => !prev)
     }
     catch (error) {
       console.log(error)
     }
-    console.log("Joining group with code:", code);
   }
 
   return (
@@ -54,9 +52,9 @@ const JoinGroup = ({ ...props }: any) => {
       <h1 className="text-3xl font-black mb-4">Join Group</h1>
       <div className="flex gap-5">
         <input className="bg-muted rounded-full px-3" value={code} name="code" id="code" onChange={changeCode} placeholder="Enter Group Code" />
-        <ThemeButton handleClick={handleSubmit}>
+        <PandaButton handleClick={handleSubmit}>
           Join
-        </ThemeButton>
+        </PandaButton>
       </div>
     </div>
   );

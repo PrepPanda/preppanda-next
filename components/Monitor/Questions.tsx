@@ -11,12 +11,8 @@ const Questions = ({
       {currentQuestionIndex < questions.length ? (
         <Question
           key={currentQuestionIndex}
-          currentQuestionIndex={currentQuestionIndex}
           questiondata={questions[currentQuestionIndex]}
           uniqueValue={Math.random()}
-          disabled={true}
-          inTest={true}
-          handleAnswerChange={handleAnswerSubmit}
         />
       ) : (
         <p>No more questions</p>

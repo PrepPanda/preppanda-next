@@ -1,6 +1,4 @@
-// Footer section of the website
-
-import ThemeLink from "@/components/shared/ThemeLink";
+import PandaLink from "@/components/panda/PandaLink";
 
 const About = () => {
   return (
@@ -13,35 +11,34 @@ const About = () => {
         <div className="flex-col  basis-1/2 w-full z-10">
           <p className="text-3xl font-semibold ">TEAM</p>
           <div className="flex gap-4 flex-row mt-3">
-            <ThemeLink
+            <PandaLink
               linkUrl={"https://github.com/patelhitarth08"}
             >
               <p>Hitarth</p>
-            </ThemeLink>
-            <ThemeLink
+            </PandaLink>
+            <PandaLink
               linkUrl={"https://github.com/Kashyap3003"}
             >
               <p>Kashyap</p>
-            </ThemeLink>
-            <ThemeLink
+            </PandaLink>
+            <PandaLink
               linkUrl={"https://github.com/rajatnai49"}
             >
               <p>Rajat</p>
-            </ThemeLink>
+            </PandaLink>
           </div>
         </div>
 
         <div className="flex-col basis-1/2 w-full z-10">
           <p className="text-3xl font-semibold ">Want to Contribute?</p>
           <div className="flex gap-4 mt-3">
-            <ThemeLink
+            <PandaLink
               linkUrl={"https://github.com/orgs/PrepPanda/"}
-              >
+            >
               <p>PrepPanda</p>
-            </ThemeLink>
+            </PandaLink>
           </div>
         </div>
-        {/* <div className="spacer2 layer2"></div> */}
       </div>
     </div>
   );

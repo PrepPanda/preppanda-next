@@ -2,14 +2,11 @@
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 import Group from '@/models/group';
-import { connectDB } from '@/utils/dbconnect';
+import connectDB from '@/utils/connectDB';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req;
   const { userId } = req.query;
-
-  // console.log(method)
-  // console.log(userId)
 
   if (!userId) {
     return res.status(400).json({ error: 'User ID is required' });
@@ -31,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (groupId) {
         try {
           connectDB()
-          const updatedGroup = await Group.updateOne(
+          await Group.updateOne(
             { _id: groupId },
             { $pull: { members: userId } }
           );

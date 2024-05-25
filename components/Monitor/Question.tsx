@@ -5,7 +5,7 @@ const Question = ({ questiondata, uniqueValue }: any) => {
   const [index, setIndex] = useState<number>(-1);
   const [userAnswer, setUserAnswer] = useState<string>("");
 
-  const savingTimeSpents = (timeSpent) => {
+  const savingTimeSpents = (timeSpent: any) => {
     const userQuestionDataStr = localStorage.getItem('userQuestionData');
     if (userQuestionDataStr) {
       let userQuestionData = JSON.parse(userQuestionDataStr);
@@ -16,13 +16,11 @@ const Question = ({ questiondata, uniqueValue }: any) => {
 
   useEffect(() => {
     if (index != -1) {
-      const mountedTimeStamp = new Date();
-      console.log("Mounted TimeStamp: " + index + " ", mountedTimeStamp);
+      const mountedTimeStamp: any = new Date();
       return () => {
-        const unmountedTimeStamp = new Date();
+        const unmountedTimeStamp: any = new Date();
         const timeSpent: number = (unmountedTimeStamp - mountedTimeStamp) / 1_000;
         savingTimeSpents(timeSpent)
-        console.log("Unmounted TimeStamp: " + index + " ", unmountedTimeStamp);
       }
     }
   }, [index]);
@@ -34,7 +32,6 @@ const Question = ({ questiondata, uniqueValue }: any) => {
       const index = userQuestionData.findIndex((obj: any) => obj.id === questionId);
       setIndex(index);
       setUserAnswer(userQuestionData[index].userAnswer)
-      console.log("Index of current question:", index);
     }
   }, []);
 

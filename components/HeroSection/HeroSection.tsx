@@ -1,5 +1,5 @@
 "use client";
-import ThemeButton from "@/components/shared/ThemeButton";
+import PandaButton from "@/components/panda/PandaButton";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import SentimentVerySatisfiedRoundedIcon from '@mui/icons-material/SentimentVerySatisfiedRounded';
 
@@ -36,10 +36,10 @@ const HeroSection = () => {
               </p>
             </div>
           </div>
-          <ThemeButton>
+          <PandaButton>
             <p>Begin your journey</p>
             <IoIosArrowRoundForward className="text-2xl" />
-          </ThemeButton>
+          </PandaButton>
         </div>
       </div>
     </>

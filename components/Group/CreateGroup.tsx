@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import ThemeButton from "../shared/ThemeButton";
+import PandaButton from "../panda/PandaButton";
 import toast from "react-hot-toast";
 
 const CreateGroup = ({ onGroupCreated, ...props }: any) => {
@@ -30,7 +30,6 @@ const CreateGroup = ({ onGroupCreated, ...props }: any) => {
         }
       )
       props.setUpdate((prev: boolean) => !prev)
-      console.log(res);
       toast('Group Created',
         {
           icon: '🎉',
@@ -46,7 +45,6 @@ const CreateGroup = ({ onGroupCreated, ...props }: any) => {
     catch (error) {
       console.log(error);
     }
-    console.log("Group with name:", newGroupName);
   }
 
   return (
@@ -54,7 +52,7 @@ const CreateGroup = ({ onGroupCreated, ...props }: any) => {
       <h1 className="text-3xl font-black mb-4">Create Group</h1>
       <div className="flex gap-5">
         <input className="bg-muted rounded-full px-3" value={newGroupName} name="newGroupName" id="newGroupName" onChange={updateGroupName} placeholder="Enter Group Name" />
-        <ThemeButton handleClick={createGroup}>Create</ThemeButton>
+        <PandaButton handleClick={createGroup}>Create</PandaButton>
       </div>
 
     </div>
